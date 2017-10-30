@@ -1,0 +1,1455 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{setspace}
+\usepackage[left=3.5cm,right=1.5cm,top=3cm,bottom=1.5cm,includefoot]{geometry}
+\usepackage{lscape} % allows some pages to be formated in landscape
+\usepackage{mathptmx} %uses a Time like font
+\usepackage{amsmath} %allows spaces between words within equations
+\usepackage{helvet} % package for helvetica font
+\renewcommand{\familydefault}{\sfdefault} %sets helvet as default font
+\usepackage{ragged2e}	% allows justification of writing
+\usepackage{indentfirst}
+\usepackage{afterpage}
+\usepackage{url} % to appropriately format url's included in the text
+
+%List of figures/tables preamble
+\usepackage{tocloft}
+\renewcommand\cftfigindent{0pt}  % no indentation
+\renewcommand\cftfigpresnum{Figure }   % prefix "Figure" before figure number
+%\renewcommand\cftfigaftersnum{)} % affix ")" after figure number
+\addtolength{\cftfignumwidth}{32pt} % increase space between 'Figure 1' and title
+\renewcommand\cfttabindent{0pt}  % not indetation for list of tables
+\renewcommand\cfttabpresnum{Table } % prefix "Table" before table number
+\addtolength{\cfttabnumwidth}{32pt} % increase space between 'Table 1 and title
+
+%bibliography preamble
+\usepackage{apacite} % for APA citations
+
+%glossary preamble
+%\usepackage[nopostdot,style=altlist,nonumberlist]{glossaries}
+\usepackage[nopostdot,nonumberlist,acronym,toc,section]{glossaries}
+\makenoidxglossaries
+%\setlength{\glsdescwidth}{0.75\textwidth}
+
+%glossary terms
+\newglossaryentry{metagenomics}
+{
+	name={metagenomics},
+	description={The high-throughput study of genetic material from multiple genomes recovered directly from environmental samples that contain mixed populations}
+}
+\newglossaryentry{metataxonomics}
+{
+	name={metataxonomics},
+	description={Estimation of the taxonomic composition of a given microbial community from high-throughput sequencing data}
+}
+\newglossaryentry{metagenomic sample}
+{
+	name={metagenomic sample},
+	description={High-throughput sequencing data containing DNA sequences from a complex mixture of species, mainly bacterial}
+}
+\newglossaryentry{paleomicrobiology}
+{
+	name={paleomicrobiology},
+	description={Detection, identification and characterization of microorganisms in ancient remains}
+}
+\newglossaryentry{pathogenomics}
+{
+	name={pathogenomics},
+	description={The use of HTS genomic and metagenomic data to understand pathogen diversity and host-microbe interactions involved in disease states}
+}
+\newglossaryentry{microbial archaeology}
+{
+	name={microbial archaeology},
+	description={Study of microbial organisms present in archeological remains}
+}
+\newglossaryentry{microbiome}
+{
+	name={microbiome},
+	description={The combined genetic material of the microorganisms in a particular environment}
+}
+\newglossaryentry{taphonomic}
+{
+	name={taphonomic},
+	description={Post-mortem alteration of biological material}
+}
+\newglossaryentry{pathogen}
+{
+	name={pathogen},
+	description={An organism that can cause disease in another organism}
+}
+\newglossaryentry{commensal microorganisms}
+{
+	name={commensal microorganism},
+	description={A microorganism that benefits from living in close contact with a human or animal but has no direct beneficial or detrimental effects on its hots.}
+}
+\newglossaryentry{core genome}
+{
+	name={core genome},
+	description={The set of genes found in all members of a single species}
+}
+\newglossaryentry{pan-genome}
+{
+	name={pan-genome},
+	description={The set of all genes found in members of a single species}
+}
+\newglossaryentry{deamination}
+{
+	name={deamination},
+	description={The hydrolytic removal of an amine group from a nucleic acid.}
+}
+\newglossaryentry{miscoding lesion}
+{
+	name={miscoding lesion},
+	description={Introduction of a base substitution during NGS as a result of DNA damage leading to altered base-pairing. For example, the presence of uracil in aDNA due to cytosine deamination will produce a cytosine to thymine substitution as adenine is base-paired with uracil during amplfication.}
+}
+\newglossaryentry{depurination}
+{
+	name={depurination},
+	description={Cleavage of the N-glycosidic link between a purine base and the deoxyribose portion of the nucleotide resulting in loss of the purine base while leaving the DNA backbone intact.}
+}
+\newglossaryentry{abasic site}
+{
+	name={abasic site},
+	description={Location in the DNA that lacks a base (either a purine or pyrimidine). Also known as an AP site (apurinic/apyrimidinic site).}
+}
+
+
+%Acronyms
+\setacronymstyle{long-short}
+\newacronym{adna}{aDNA}{ancient DNA}
+\newacronym{hts}{HTS}{high-throughput sequencing}
+\newacronym{NGS}{NGS}{next-generation sequencing}
+
+
+
+%Header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+\fancyhf{}
+\rhead{\fancyplain{}{\rightmark }}
+%\fancyfoot{}
+\fancyfoot[R]{\thepage\ }
+%\fancyhead[R]{\label}
+
+%Tables preamble
+\usepackage[none]{hyphenat} %Prevents breaking up of words in table
+\usepackage{booktabs}
+\renewcommand{\arraystretch}{1.2}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+\usepackage{makecell}
+\renewcommand\theadalign{cc}% centred tabular headers
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\usepackage[font=normalsize,labelfont=bf]{caption} %format captions globally
+
+%image preamble
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[font=small,skip=0pt]{caption} % package to alter space between figure and caption
+\captionsetup[table]{skip=10pt}
+\usepackage[•]{subcaption}
+
+%appendix preamble
+\usepackage[titletoc,toc,title,header]{appendix}
+\usepackage{sectsty} %package to be able to edit section styles
+
+\begin{document}
+	\begin{titlepage}
+		\begin{center} 
+		\huge{Investigating DNA damage patterns in ancient microbial sequences}\\[2cm]
+		\begin{figure}[H]
+		\centering
+			\includegraphics[scale=0.75]{Rplots/UofAlogo}\\[2cm]
+		\end{figure}
+		\large{Jacqueline Rehn}\\[0.2cm]
+		\large{Bioinformatics Hub}\\[0.2cm]
+		\large{University of Adelaide}\\[1cm]
+		\large\textit{Supervisors}\\[0.2cm]
+		\large{Dr. Jimmy Breen (Primary)}\\[0.2cm]
+		\large{Stephen Pederson (Co-supervisor)}\\[1cm]
+		\large{A thesis submitted for the degree of}\\[0.2cm] 
+		\large{\textit{Masters of Biotechnology (Biomedical)}}\\[0.2cm]
+		\large{\today}\\[1cm]
+		
+		\end{center}
+	\end{titlepage}
+\doublespace
+\justify
+\sloppy
+
+%table of contents
+\tableofcontents
+\thispagestyle{empty}
+\cleardoublepage
+
+%Front matter
+\pagenumbering{roman}
+
+%List of figures, list of tables
+\listoffigures
+\addcontentsline{toc}{section}{\numberline{}List of Figures}
+\cleardoublepage
+
+\listoftables
+\addcontentsline{toc}{section}{\numberline{}List of Tables}
+\cleardoublepage
+
+%main body
+
+%Glossary and Acronyms list
+\singlespacing
+\printnoidxglossary[style=altlist,title={\numberline{}Glossary}]\label{sec:glossary}
+
+\renewcommand{\glsnamefont}[1]{\textbf{#1}} %cause acronym to appear bold
+\printnoidxglossary[type=\acronymtype, style=super, title={\numberline{}List of Abbreviaitons}]\label{sec:acronyms}
+%\addcontentsline{toc}{section}{\numberline{}Acronyms}
+\newpage
+\doublespacing
+
+\section*{Abstract\markright{}}\label{sec:abstract}
+\noindent
+The expanding field of \gls{paleomicrobiology} is providing insight into the effects of diet and modern lifestyles on the composition and evolution of gut and oral microbiomes, as well as resulting in the construction of ancient pathogenic genomes to address questions about phylogeny and virulence development. 
+Despite advancements in protocols for the extraction, sequencing, and analysis of ancient DNA, issues of sample contamination continue to impede metataxonomic analysis and genome reconstruction. 
+Bioinformatic analysis of damage patterns unique to aDNA provides one mechanism though which the ancient nature of sequencing data can be verified.
+However, before these approaches can be applied confidently to paleomicrobial studies, assessment of the accuracy of currently applied protocols as well as exploration into potential differences in DNA preservation amoung microbial taxa is needed.
+
+%DNA extracted from archaeological remains demonstrates characteristic damage patterns including short fragment lengths and an increased proportion of cytosine to thymine substitutions at..
+%Assessment of DNA damage patterns has become a common method for authenticating results.
+%However in paleomicrobiology, there is limited knowledge about the rate at which DNA of microorganisms decay and whether damage patterns may vary between microbial species due to phenotype.
+
+%DNA is known to degrade over time. 
+%Although the rate of decay is dependent on a variety of factors, all extracted ancient DNA molecules demonstrate common characteristics; short fragment lengths and an increased proportion of cytosine to thymine and guanine to adenine transition errors at the ends of reads when mapped to modern reference genomes. 
+%Consequently, the bioinformatic identification of these patterns is commonly used to authenticate the ancient origin of DNA sequencing data.
+%However, current programs and procedures used for evaluating damage levels mimic protocols developed for assessing mammalian specimens. 
+%Furthermore, there is limited research regarding factors that may affect the rate of DNA decay in phenotypically distinct microbial cells or evaluating the ability of these tools to distinguish between microbial species endogenous to the host and closely related species present as environmental contaminants. 
+
+Here we investigate DNA damage patterns in microbial cells and present a bioinformatic workflow for assessing and comparing the read length and nucleotide substitution patterns observed in ancient dental calculus. 
+Results indicate that the levels of cytosine deamination vary due to cell wall structure, occurring at elevated frequencies in Bacteroidetes. 
+Additionally, we demonstrate with simulated data that the presence of closely related species within \gls{metagenomic sample}s can result in misalignment, particularly for short fragment lengths.
+Furthermore, misalignment can affect median fragment lengths and deamination levels estimated by mapDamage.
+Consequently, careful consideration of the sample data and potential environmental contaminants is needed when estimating levels of DNA damage in microbial sequences.
+
+
+
+
+%to ensure this unnumbered section appears in table of contents
+\addcontentsline{toc}{section}{\numberline{}Abstract}
+\newpage
+
+\section*{Signed Declaration}
+\addcontentsline{toc}{section}{\numberline{}Signed Declaration}
+\noindent
+\\[2cm]
+I declare that this thesis does not incorporate without acknowledgement any material previously submitted for a degree or diploma in any university and that to the best of my knowledge it does not contain any materials previusly published or written by another person except where due reference is made in the text.
+\clearpage
+
+\section*{Acknowledgment\markright{}}\label{sec:acknowledge}
+\addcontentsline{toc}{section}{\numberline{}Acknowledgement}
+
+
+I want to express my gratitude to my primary supervisor Dr. Jimmy Breen for his support and encouragement throughout my research project. His extensive knowledge of both bioinformatics and ancient DNA has been invaluable in guiding my efforts. I am also deeply grateful to my co-supervisor Steve Pederson for his assistance with the statistical analysis component of my research and his suggestions and regarding my figures and writing.\\ 
+
+I would also like to acknowledge some of the researchers at the Australian Center for Ancient DNA at the University of Adelaide. Firstly, I wish to thank Dr. Laura Weyrich for her positive encouragement and advice at key times during my research that motivated my efforts. I would like to thank Raphael Eisenhofer for his assistance in generating the simulated datasets essential to validating my results and Dr. Bastien Llamas for his expertise with the mapDamage program.\\
+
+Thank you for support of other staff in bioinformatics hub for the knoweldge and advice they have offered throughout the year. I would further like to thank the additional Honours and Masters students in the Bioinformatics Hub for their support and encouragement in developing my coding skills.\\
+
+Finally, many thanks to Dr. Antonio Focareta and Dr. Alistair Standish for their knowledge and and encouragement throughout the first year of my Masters degree. 
+
+
+
+\newpage
+
+%pagnation for main body
+\pagenumbering{arabic}
+\setcounter{page}{1} %set page counter here so contents page not numbered
+
+\section{Introduction}\label{sec:intro}
+
+%Paleomicrobiology, more recently referred to as \gls{microbial archaeology} \cite{Warinner:2017aa}, 
+
+Paleomicrobiology is the detection, identification, and characterisation of microorganisms in ancient remains and environmental samples \cite{Drancourt:2005aa}. 
+This expanding faction of the \gls{adna} field is broadly divided into two key areas; \gls{pathogenomics}, the sequencing and assembly of pathogenic genomes extracted from historical remains, and \gls{microbiome} studies investigating the composition and function of microbial communities that exist within specific niche environments of the human body \cite{Lederberg:2001}.
+Investigation into ancient microbes has several valuable applications.
+Reconstruction of ancient pathogenic genomes can help to improve understanding regarding the evolution of virulence and epidemiology \cite{Bos:2011aa,Kay:2014aa}.
+Furthermore, temporal comparisons of the composition of the oral \cite{Adler:2013aa,Warinner:2014aa} and gut microbiome \cite{Tito:2012aa,Lugli:2017aa} can provide insight into past diet and enable exploration of relationships between bacterial species and their hosts, in both health and disease. 
+However, the presence of contaminating microbial DNA from decompsition, deposition, storage and laboratory analysis can result in false positive identification of endogenous species. 
+Consequently, authentication of findings is a key compoenent of aDNA studies.
+
+%However, to substantiate findings and make meaningful biological conclusions challenges in the field of \gls{adna}, such as the contamination of samples with DNA sequences from non-endogenous microbes, need to be overcome. 
+%
+%Archaeological remains contain a mixture of microbial DNA sequences. These include endogenous host-associated bacteria present before death; exogenous microbial DNA that has entered specimens post-mortem due to decomposition, deposition, and sample storage conditions \cite{Poinar:2006aa,Der-Sarkissian:2014aa}; and modern microbial DNA that enters samples as a result of handling \cite{Richards:1995,Malmstrom:2005aa} and exposure to laboratory surfaces and reagents \cite{Salter:2014}.
+%Despite advancements in protocols for the extraction, sequencing, and analysis of \gls{adna}, issues of sample contamination continue to impact numerous studies in the field \cite{Gilbert:2004aa,Shapiro:2006aa}, and extensive measures have been recommended for the authentication of results\cite{Cooper:2000aa}.
+One method for validating the ancient origin of sequencing data is through the bioinformatic analysis of characteristic damage patterns of nucleic acids extracted from archaeological specimens.  
+DNA is known to degrade in a time-dependent manner, resulting in genome fragmentation \cite{Allentoft:2012aa} and the introduction of modified bases that result in miscoding lesions during sequencing \cite{Briggs:2007aa,Brotherton:2007aa,Hofreiter:2001aa}. 
+While the presence of these characteristic damage patterns is now regularly reported as evidence that microbial DNA is ancient in origin \cite{Bos:2015aa,Weyrich:2017aa,Warinner:2014aa}, current tools are based on decay patterns observed in mammalian specimens \cite{Briggs:2007aa,Jonsson:2013aa}.
+Given the differences in cell structure, chromosome compaction and methylation patterns observed between bacterial and mammalian genomes, it is possible these sequences may demonstrate variances in the degradation and nucleotide misincorporation patterns\cite{Der-Sarkissian:2014aa}?.
+Furthermore, phenotypically distinct taxa may vary in the rate of DNA degradation which may affect taxonomic identification of microbial sequences and estimated abundances within microbial communities \cite{Adler:2013aa,Weyrich:2017aa}.
+Consequently further characterisation of the typical degradation patterns of ancient microbial sequences is warranted.
+
+
+\subsection{Studies of ancient microbial DNA}
+
+Early studies in microbial archaeology began with targeted PCR amplification of discriminatory genes \cite{Spigelman:1993,SALO:1994aa,Drancourt:1998aa} and 16S ribosomal rRNA gene clones taken from mummified tissue samples \cite{Cano:2000aa}.
+With the advent of high-throughput sequencing technologies and improvements in protocols to limit contamination, paleogenomics, the reconstruction of genomes from ancient remains, became possible. 
+Initial studies focused on mammoth (\textit{Mammuthus primigenius})  \cite{Poinar:2006aa} and Neanderthal (\textit{Homo neanderthalensis}) \cite{Green:2006aa} genome reconstruction, but in the last few years several ancient pathogens have also been sequenced and the phylogeny of these compared with modern reference sequences \cite{Schuenemann:2013aa,Kay:2014aa,Wagner:2014aa,Lugli:2017aa}.
+These results have provided insight into the rise and spread of endemic pathogens such as \textit{Mycobacterium leprae} \cite{Schuenemann:2013aa} and \textit{Yersinia pestis} or the plague \cite{Wagner:2014aa}.
+
+Only recently have studies attempted to profile the microbiome from human and hominid remains. 
+Two ancient microbiome sources typically persist in archaeological contexts; these are coprolites, mineralized faecal matter, and dental calculus or calcified dental plaque.
+Metagenomic analysis of coprolites can provide a snapshot of both the ancient gut microbiota and diet, giving insight into effects of industrialization and modern medicine on microbiome communities \cite{Tito:2008aa}. 
+Studies conducted by \citeA{Tito:2012aa} demonstrated that the intestinal microbiota of ancient South Americans more closely resembles that of modern rural populations than urban groups. 
+However, paleofecal matter is rarely preserved and these analyses are often confounded by environmental contamination due to bacterial infiltration during burial and decomposition \cite{Tito:2012aa}.  
+
+Contrary to coprolites, dental calculus was nearly ubiquitous in adults before modern dentistry \cite{White:1997} and is a reservoir of well-preserved DNA making it an ideal medium for analysis of ancient oral microbiomes \cite{Warinner:2014aa,Weyrich:2015aa}. 
+By profiling the microbes present in dental calculus researchers can trace temporal shifts in bacterial composition and assess the effect of diet on microbial community structure \cite{Weyrich:2015aa}.
+\citeA{Adler:2013aa} analysed dental calculus from modern, industrial and Neolithic remains to demonstrate that the contemporary oral microbiome has become much less diverse with a higher proportion of cariogenic bacteria (bacteria that cause tooth decay). 
+These alterations correlate strongly with increased consumption of soft carbohydrates \cite{Adler:2013aa}.
+In a subsequent study by \citeA{Warinner:2014aa}, shotgun sequencing of dental calculus produced a genus and species level taxonomic assessment of the ancient microbiome, revealing the presence of multiple opportunistic pathogens and providing evidence that putative antimicrobial resistance genes existed before antibiotic use. 
+More recently, shotgun sequencing of five Neanderthal calculus samples enabled characterisation of regional differences in Neanderthal diets as well as correlations between diet and the oral microbial community \cite{Weyrich:2017aa}.
+
+While these results contribute to our knowledge of oral microbiome evolution, the potential for microbial DNA to contaminate samples prior to sequencing must be considered when interpreting results. Sample contamination by exogenously derived bacteria can occur, both from the environment in which specimens are found and the laboratory in which library preparation is performed \cite{Cooper:2000aa,Handt:1994aa}. If not identified and removed from the sample data, the presence of microbial DNA from species that are non-endogenous to the ancient microbiome can skew the resultant taxonomic profile \cite{Ziesemer:2015aa} or result in false-postive identification of putative pathogenic organisms in remains \cite{Gilbert:2004aa, Shapiro:2006aa}. 
+
+
+\subsection{Contamination}\label{sec:contamination}
+Microbial DNA can enter archaeological samples in several ways. 
+Firstly, potential contaminants come from \gls{taphonomic} processes in which DNA of bacteria and insects involved in decomposition may be deposited within the archaeological remains \cite{Noonan:2005aa,Poinar:2006aa}. 
+As these sequences accumulate shortly after death, they demonstrate similar degradation patterns as endogenous DNA, making them almost impossible to distinguish from the host associated microbiome \cite{Herbig2016}. 
+Prior to excavation, microbes present in the soil can penetrate fossil specimens \cite{Noonan:2005aa}, while handling and washing of remains can further introduce modern human and environmental bacterial contaminants \cite{Pruvost:2007aa}. 
+In addition, bacteria have been shown to be present even in supposedly sterile environments such as DNA extraction kits and laboratory reagents \cite{Salter:2014}. 
+As a result, DNA from these ever-present microbes is consistently amplified and sequenced along with the prepared sample. 
+
+Several high profile studies claiming to have sequenced DNA from the Cretaceous period \cite{Woodward:1994aa} or in environments ill-suited to the preservation of biological material \cite{Paabo:1985aa} have been shown to be erroneous, with identified sequences representing modern contaminants, often human \cite{Cooper:2000aa,Rizzi:2012aa}. 
+Due to these repeated failures, protocols have been suggested to limit the impact of contamination on ancient DNA analysis \cite{Weyrich:2015aa,Cooper:2000aa}. 
+These protocols include the use of dedicated aDNA labs to limit contamination, independent replication in another laboratory \cite{Cooper:2000aa}, and bleach treatment and UV irradiation of the sample surface before DNA extraction to remove environmental bacterial contaminants \shortcite{Weyrich:2015aa}.
+Furthermore, since independent replication cannot eliminate contaminants that are common to all laboratories \cite{Garcia-Garcera:2011aa}, researchers should also sequence DNA extraction blanks to identify potential laboratory contaminant sequences. Sequences from taxa present in extraction blanks should be removed from the sample data during bioinformatic analysis \shortcite{Salter:2014,Weyrich:2015aa}. 
+Tools such as SourceTracker \cite{Knights:2011aa} can also be used to identify the most likely source of bacterial species present in the sample data by comparison to published microbiome datasets, and thus assess the extent of contamination \shortcite{Ziesemer:2015aa}. 
+
+Even with these protocols, results must be viewed with caution, and research findings need to be substantiated to demonstrate that the sequences analysed are ancient in origin \cite{Eisenhofer:2016aa}. 
+Given that DNA damage is a ubiquitous feature of aDNA \cite{Briggs:2010aa,Sawyer:2012aa} analysis of DNA damage patterns can be used as a method of authentication  \cite{Poinar:2006aa,Zaremba-Niedzwiedzka:2013aa}. 
+%The program mapDamage2.0 \cite{Jonsson:2013aa} was thus developed to assess median read length and base substitution patterns of sample data.
+%As it is assumed that the extent of decay will be constant across all reads of the same age \cite{Zaremba-Niedzwiedzka:2013aa}, sequences that demonstrate reduced fragmentation and base substitution can be considered contaminants and ignored during subsequent analysis \cite{Lugli:2017aa}.
+However, the ability to utilise aDNA damage as an indicator of the age of microbial DNA is dependent on the accurate assessment of the decay patterns expected in bacterial genomes.
+
+\subsection{DNA damage}\label{sec:DNAdamage}
+DNA constantly accumulates damage as a result of endogenous nucleases \cite{Briggs:2010aa}, oxidation and spontaneous hydrolysis of chemical bonds \cite{Schroeder:2007aa,Hoss:1996aa}. 
+While cells are capable of repairing the majority of this damage, after death there is a loss of DNA repair enzymes \cite{Lindahl:1993aa, Willerslev:2004aa}, and consequently a build-up of strand breaks, crosslinks and base modifications \cite{Briggs:2007aa,Paabo:1989aa,Sawyer:2012aa}. 
+As a result aDNA is highly fragmented \cite{Lindahl:1993aa,Briggs:2007aa}, difficult to amplify \cite{Willerslev:2004aa}, and contains altered bases that cause nucleotide misincorporation during amplification or \gls{NGS} sequencing \cite{Stiller:2006aa,Briggs:2007aa}.
+Several studies have attempted to identify characteristic damage patterns present in horse \cite{Orlando:2011aa}, wolf \cite{Stiller:2006aa}, mammoth and Neanderthal sequences \cite{Briggs:2007aa,Briggs:2010aa,Stiller:2006aa}.
+These analyses confirm that the majority of aDNA degradation is a result of depurination and cytosine deamination \cite{Briggs:2007aa}.
+\clearpage
+
+Depurination results in the formation of apurinic, or abasic, sites that are susceptible to alkaline hydrolysis and cleavage of the baseless sugar residue \cite{Lindahl:1972aa,Lindahl:1993aa}. 
+This introduces strand breaks, causing fragmentation of the DNA duplex \cite{Garcia-Garcera:2011aa}, and resulting in short fragment lengths with an increased occurrence of purines before strand breaks \cite{Briggs:2007aa}. 
+Given the progressive nature of this process, questions have arisen regarding the maximum age of DNA sequence preservation. 
+Claims of million-year-old DNA sequences being preserved in bone have been shown to be false \cite{Allentoft:2012aa}, however million-year-old DNA fragments have been located in permafrost \cite{Poinar:2006aa}. 
+While the total amount of retrievable DNA has been shown to decrease over time, there is no strong correlation observed between the age of samples and the length of extracted fragments \cite{Sawyer:2012aa}. 
+Instead, temperature and precipitation appear to be more reliable predictors of DNA decay \cite{Kistler:2017}. 
+Since oxidation and hydrolysis are limited at very low temperatures or in desiccated environments \cite{Dabney:2013aa}, it is expected that DNA can survive for extended periods, but only in specimens exposed to these preservation conditions \cite{Allentoft:2012aa}.
+
+Deamination is the loss of an amine residue from adenine, cytosine or guanine \cite{Lindahl:1993aa}. 
+While each of these modifications can results in nucleotide misincorporation during NGS (see Table \ref{Table:BaseMods}), deamination of cytosine to uracil occurs at a rate approximately 40-fold higher than adenine or guanine \cite{Stiller:2006aa}, with this decay being greater for single-stranded overhangs present at the ends of fragmented molecules \cite{Lindahl:1993aa}.
+As uracil base pairs with adenine during NGS, sequencing of single-stranded aDNA templates produces reads which demonstrate an increased frequency of cytosine to thymine substitutions  at both ends of the read when aligned to a reference genome. 
+This symmetrical pattern is indicative of nucleotide misincorporation as a result of cytosine deamination occuring more frequently at the ends of DNA fragments. 
+For double-stranded sequencing experiments the increase in cytosine to thymine misincorporation pattern at the 5' ends of reads in typically matched by a similar increase in guanine to adenine substitutions at the 3' end of the read \cite{Briggs:2007aa}.
+The altered pattern in double-stranded DNA data can be explained by the library preparation protocol \cite{Briggs:2007aa, Sawyer:2012aa} in which T4 DNA polymerase removes 3' overhangs while filling in recessed 3' ends \shortcite{Meyer:2010aa}. 
+Thus only the 5' ends of a read represents the sequence of the aDNA. 
+The 3' ends of reads will either demonstrate reduced damage, as a result of cleavage, or an increased proportion of guanine to adenine substitutions reflecting the cytosine to thymine transition present in the complimentary strand \cite{Briggs:2007aa,Sawyer:2012aa}, as shown in Figure \ref{fig:bluntEndRepair}.\\
+
+\begin{table}[h]
+	\centering
+	\caption[Base modifications as a result of deamination and the effect on NGS data]{\textbf{Base modifications as a result of deamination and effect on NGS data}}\label{Table:BaseMods}
+	\includegraphics[scale=0.8]{Rplots/DNAdamage.pdf}
+\end{table}
+
+
+
+\begin{figure}[!ht]
+\centering
+\singlespace
+\includegraphics[scale=0.75]{Rplots/decayAndBluntEndRepair}
+\caption[Effects of DNA damage on next-generation sequencing data]{\textbf{Effects of DNA damage on next-generation sequencing data.}\\[0.1cm] \small{Adapted from Figure 6A Genomic Sequencing data sheet (\url{https://www.illumina.com/documents/products/datasheets/datasheet_genomic_sequence.pdf}). \textbf{(a-b)} The loss of purine residues leads to \textbf{(c)} introduction of single-strand breaks and fragmentation of the DNA molecule. \textbf{(d)} At the ends of fragments, cytosine is deaminated to uracil. \textbf{(e)} During NGS sequencing blunt-end repair enzymes fill-in 5' overhangs \textbf{(f)} prior to adapter ligation. \textbf{(g)} During bridge amplification, uracil residues base-pair with adenine, leading to misincorporation of thymine in place of uracil. \textbf{(h)} Thus NGS results in a C to T transition (CTA $-->$ TTA) at the 5'  ed of the read and a G to A transition (TGA $-->$ TAA) at the 3' end.} }\label{fig:bluntEndRepair}
+\end{figure}
+\clearpage
+
+Although degradation of aDNA complicates downstream analysis \cite{Kircher:2012aa} the presence of characteristic damage patterns can be used to distinguish between endogenous microbial sequences and exogenous modern contaminants \cite{Ginolhac:2011aa,Zaremba-Niedzwiedzka:2013aa, Kay:2014aa}.
+%For example, the bioinformatic tool mapDamage2.0 \cite{Jonsson:2013aa} which summarises the fragmentation pattern of sample reads and estimates the extent of cytosine deamination \cite{Jonsson:2013aa}, has been used to authenticate findings in several paleomicrobial studies \shortcite{Kay:2014aa,Wagner:2014aa,Weyrich:2017aa}.
+However, some bacterial sequences obtained from archaeological remains have been shown to demonstrate lower levels of hydrolytic damage than that present in mammalian samples \cite{Schuenemann:2013aa,Ziesemer:2015aa}, suggesting differences in the degradation pattern of some microbial genomes.
+Investigation of \textit{Mycobacterium} DNA has revealed that it is more resistant to dry heat stress than eukaryotic DNA due to the unique structure of its cell wall \cite{Nguyen-Hieu:2012aa}.
+Consequently, sequences obtained from paleogenomic studies of \textit{Mycobacterium leprae} show reduced degradation compared to human aDNA \cite{Schuenemann:2013aa}. 
+Differences have also been observed between the nucleotide substitution patterns of nuclear and mitochondrial DNA from the same sample. 
+Mitochondrial DNA demonstrates a lower level of cytosine to thymine substitutions than nuclear DNA and a higher proportion of adenine to guanine transitions, which may be attributed to  \cite{Binladen:2006aa}. 
+
+In addition to showing differences in the cell wall and DNA compaction, variation in the methylation patterns of bacteria may also affect the type of nucleotide substitutions observed. 
+5-methylcytosines (5mC) have been shown to decay at a rate 3-4 times faster than non-methylated cytosines. Since 3\% of mammalian DNA is cytosine methylated, it is expected that 10\% of hydrolytic deamination occurs at methylated residues \cite{Lindahl:1993aa}. 
+In bacteria, N6-methyladenine is the most abundant form of methylation and has been shown to undergo hydrolysis to produce hypoxanthine \cite{OBrown:2016aa}. 
+As hypoxanthine preferentially base pairs with cytosine, it's presence can cause an adenine to guanine transition during NGS sequencing \cite{Stiller:2006aa}.
+If some bacterial species do indeed show different patterns of DNA degradation, current tools for assessing aDNA decay are not appropriate for the authentication of findings. 
+Furthermore, as the type and extent of nucleotide misincorporations present in sequenced reads affects taxonomic classification \cite{Kircher:2012aa}, greater degradation of DNA occuring in some microbial species over other may result in skewed taxonomic profiles.  
+
+\subsection{Bioinformatic analysis of ancient DNA}\label{sec:bioinformatics}
+Current methods for the taxonomic classification of sequences in metagenomic samples are inefficient and struggle to classify short read data \cite{Segata:2012aa}. 
+These problems are exacerbated in the case of aDNA samples as miscoding lesions introduce errors into the sequence that reduces similarity between sample reads and the reference genomes to which they are being aligned \cite{Schubert:2012aa} and consequently only a small proportion of aDNA reads are assigned a taxonomy \cite{Fosso:2017aa}.
+While the sensitivity and accuracy of alignment algorithms can be improved by optimising program parameters for the particular types of post-mortem damage present in sample reads \cite{Schubert:2012aa}, this is dependent on knowledge of expected error frequencies and misincorporation patterns.
+
+Identification of DNA damage patterns in sequence data is routinely used as a method for authenticating the ancient origin of sequencing data. 
+This is typically completed by mapping adapter and quality trimmed reads against either a single reference genome, or in the case of microbiome studies, a selection of the most abundant endogenous bacterial species identified in the sample. 
+Aligned reads are then checked for aDNA damage by quantifying nucleotide substitutions observed between the reference genome and aligned reads according to position within the read \cite{Lugli:2017aa,Weyrich:2017aa,Bos:2015aa}. 
+The presence of substantially lower substitution patterns is considered to indicate the DNA sequence originated from moden contaminant microbial DNA \cite{Lugli:2017aa}.
+However, environmental contaminant sequences which have colonized archaeological remains post-mortem may also demonstrate DNA damage patterns, albeit at a lower rate than observed for human related microbes \cite{Philips:2017aa}. 
+Thus the presence of DNA damage signals alone may not signify that all extracted DNA is ancient in origin.
+
+Another factor which may affect estimations of damage levels in ancient microbial communities is the accurate mapping of sequenced reads to modern reference genomes. 
+Alignment of aDNA data is typically completed using the BWA algorithm with optimized parameters to enable efficient mapping of reads affected by DNA damage \cite{Schubert:2012aa}. 
+These parameters have been developed and tested using aDNA from Pleistocene horse extracts and aligning against horse, chicken and human reference genomes. 
+As even evolutionarily distant microbial genomes demonstrate much greater sequence conservation than eukaryotic genomes, a higher level of missassignment may occur when mapping complex metagenomic sample data against microbial genomes.
+If this is the case, the degree with which mis-mapping occurs and the effects on estimated DNA damage requires investigation.
+
+In this study, we developed a bioinformatic workflow for extracting common oral associated microbial DNA sequences from multiple ancient dental calculus samples and investigated whether the nucleotide substitution frequencies of mapped reads varied according to the phenotype of the selected microbes under analysis. 
+The results demonstrate that there is no correlation in the degree of fragmentation observed in different microbial species, nor does the amount of nucleotide misincorporation at the ends of reads correlate with differences in GC content. 
+However, there does appear to be some variation in the frequency of miscoding lesions according to cell wall structure and phylum, with gram negative bacteria, particularly Bacteroidetes, demonstrating a higher nucleotide substitution frequency at the ends of reads compared with gram positive bacteria.
+To investigate the accuracy of short read aligners simulated metagenomic datasets with varied lengths and deamination rates were mapped using BWA with aDNA parameters as well as BWA-MEM and Bowtie2 using default parameters. 
+BWA consistently demonstrated higher recall than Bowtie2 and lower false-positive hits than BWA-MEM, although additional research is required to assess whether BWA-MEM may function as efficiently with parameters optimized for aDNA.
+What is important to note is that misalignment of reads originiating from closely related species can still produce discernable damage patterns, although the estimated deamination rates will be affected.
+\clearpage
+
+\section{Materials and Methods}\label{sec:methods}
+
+\subsection{Ancient DNA Data} %\textbf{Ancient DNA Data}
+
+Publically available shotgun sequencing data was used to determine damage patterns of different microbial species. 
+This data was part of a single study conducted by \citeA{Weyrich:2017aa} comparing the microbial composition of dental calculus taken from four Neanderthals as well as a modern human, wild chimp and several ancient specimens from Africa and Europe. 
+Sample preparation, DNA extraction, and sequencing were performed at the Australian Centre for Ancient DNA (ACAD) here at the University of Adelaide using recommended protocols for contamination control.
+Neanderthal, modern and chimp samples were sequenced to high coverage using Illumina paired-end sequencing on the HiSeq platform. 
+Additional ancient samples were sequenced to low coverage on Illumina NextSeq. 
+Processed sequencing data, in which paired-end reads had been merged with \textit{bbmerge} (\url{https://jgi.doe.gov/data-and-tools/bbtools/bb-tools-user-guide/}) and sequencing adapters trimmed with \textit{AdapterRemoval} \cite{Lindgreen:2012aa}, was downloaded from the Online Ancient Gene Repository (\url{https://www.oagr.org.au/}). 
+
+\subsection{Selection of microbial genomes for analysis}
+
+Shotgun metagenomic samples consist of DNA sequences from multiple microbial species present in the original specimen. 
+After sequencing, this produces a FASTQ file that contains a complex mixture of reads representing many different microbial species. 
+To investigate the effect of phenotype on damage patterns 15 microbial genomes representing various cell wall types and phyla were selected using the following criteria: 
+
+\begin{itemize}
+	\item{Genus is present in the sample data}
+	\item{Selected species is known to be present in the oral microbiome.}
+		\item{A complete reference sequence genome is available from NCBI.}
+\end{itemize}
+
+Presence in the oral microbiome was determined by searching the Human Oral Microbiome Database (HOMD, \url{http://www.homd.org/index.php}) and reviewing the prevalence identified by molecular cloning in addition to the rank abundance of each species within the oral microbiome.
+Where multiple reference sequences were available for a bacterial species, the representative genome was selected.
+Based on this criteria, the following 15 genomes were selected for initial damage analysis, comprising representatives of the major microbial cell types; Gram-positive, Gram-negative, Mycobacterium, Eubacterium, and Archaea.
+
+\begin{landscape}
+\begin{table}[h]
+\centering\footnotesize
+\ra{1.3}
+\setlength{\tabcolsep}{6pt} %adjust width of column spacing
+	\caption[Microbial genomes selected for alignment index]{\textbf{Microbial genomes selected for alignment index}}\label{table:15microbes}
+		\begin{tabular}{C{7cm} C{2.5cm} C{3.5cm} C{2cm} C{2.5cm} C{2.5cm} C{1.5cm} }
+		\toprule
+		\Centering\bfseries Taxon & \Centering\bfseries Species Abbreviation & \Centering\bfseries NCBI RefID & \Centering\bfseries HOMD Rank abundance & \Centering\bfseries Phylum & \Centering\bfseries Cell Type & \Centering\bfseries GC content \\[5pt] \midrule
+		{\textit{Actinomyces oris}}&{\textit{A.oris}}&{NZ\_CP014232.1}&{88}&{Actinobacteria}&{Gram-positive}&{68.5}\\[5pt]
+		{\textit{Atopobium parvulum DSM 20469}}&{\textit{A.parvulum}}&{NC\_013203.1}&{Tied for 73}&{Actinobacteria}&{Gram-positive}&{45.7}\\[5pt]
+		{\textit{Campylobacter gracilis strain:ATCC 33236}}&{\textit{C.gracilis}}&{NZ\_CP012196.1}&{16}&{Proteobacteria}&{Gram-negative}&{46.6}\\[5pt]
+		{\textit{Eubacterium saphenum ATCC 49989}}&{\textit{E.saphenum}}&{NZ\_ACON00000000.1}&{56}&{Firmicutes}&{Eubacterium}&{40.6}\\[5pt]
+		{\textit{Fusobacterium nucleatum subsp. Nucleatum ATCC 25586}}&{\textit{F.nucleatum}}&{NC\_003454.1}&{Tied for 211}&{Fusobacteria}&{Gram-negative}&{27.2}\\[5pt]
+		{\textit{Haemophilus infuenza Rd KW20}}&{\textit{H.influenza}}&{NC\_000907.1}&{Tied for 75}&{Proteobacteria}&{Gram-negative}&{38.2}\\[5pt]
+		{\textit{Methanobrevibacter oralis strain:DSM 7256}}&{\textit{M.oralis}}&{NZ\_LWMU00000000.1}&{0}&{Euryarchaeota}&{Archaea}&{27.7}\\[5pt]
+		{\textit{Mycobacterium neoaurum VKM Ac-1815D}}&{\textit{M.neoaurum}}&{NC\_023036.2}&{Tied for 459}&{Actinobacteria}&{Mycobacterium}&{66.9}\\[5pt]
+		{\textit{Neisseria meningitidis MC58}}&{\textit{N.meningitidis}}&{NC\_003112.2}&{Tied for 109}&{Proteobacteria}&{Gram-negative}&{51.5}\\[5pt]
+		{\textit{Porphyromonas gingivalis ATCC 33277}}&{\textit{P.gingivalis}}&{NC\_010729.1}&{80}&{Bacteroidetes}&{Gram-negative}&{48.4}\\[5pt]
+		{\textit{Prevotella intermedia ATCC 25611 = DSM 20706}}&{\textit{P.intermedia}}&{NC\_017860.1 NC\_017861.1}&{Tied for 116}&{Bacteroidetes}&{Gram-negative}&{43.5}\\[5pt]
+		{\textit{Streptococcus mitis B6}}&{\textit{S.mitis}}&{NC\_013853.1}&{2}&{Firmicutes}&{Gram-positive}&{40.0}\\[5pt]
+		{\textit{Streptococcus mutans UA159}}&{\textit{S.mutans}}&{NC\_004350.1}&{3}&{Firmicutes}&{Gram-positive}&{36.8}\\[5pt]
+		{\textit{Tannerella forsythia 92A2}}&{\textit{T.forsythia}}&{NC\_016610.1}&{Tied for 81}&{Bacteroidetes}&{Gram-negative}&{47.0}\\[5pt]
+		{\textit{Treponema denticola ATCC 35405}}&{\textit{T.denticola}}&{NC\_002967.9}&{90}&{Spirochaetes}&{Gram-negative}&{37.9}\\
+		\bottomrule
+		\end{tabular}
+		\\[10pt]		
+		**Note - \textit{Actinomyces oris} was formerly named \textit{Actinomyces naeslundii}
+
+\end{table}
+\end{landscape}
+
+\subsection{DNA Damage analysis pipeline}
+
+To assess the damage patterns of the selected microbial genomes pre-processed sequencing data from 6 specimens (Elsidron 1, Elsidron 2, Spy I, Spy II, wild chimp and modern) was downloaded from OAGR and processed as summarised in Figure \ref{fig:damageAnalysisWorkflow}.
+A bash script (available on gitHub), including directory and file checks, was written to process each of the sample FASTQ files through this analysis pipeline as follows. 
+Compressed FASTQ files for genomes were downloaded from NCBI by calling a tab-deliminated text file containing the genomic information and links for download. 
+Once downloaded, files were decompressed and concatenated into a single FASTA file which was then used to build an alignment index with BWA \cite{Li:2009aa}. 
+Each FASTQ file was aligned against this index with \textit{bwa aln}, using parameters specific for ancient DNA (no seeding, maximum 2 gaps, edit distance of 0.01) \cite{Schubert:2012aa}, and the resulting alignment file converted to the BAM format with header, excluding unmapped reads. 
+BAM files were sorted and duplicate reads removed using \textit{Sambamba} \cite{Tarasov:2015aa} which uses the Picard duplicate classification. 
+The resulting deduplicated BAM file contained alignments against any/all of the genomes included in the alignment index. 
+To assess damage patterns for individual microbial species, the deduplicated BAM file was split into separate BAM files for each genome using \textit{samtools view} \cite{Li:2009ab} and calling the reference sequence ID for each microbial genome in turn. 
+Only alignments with a mapping quality (MAPQ) greater than or equal to 30 were printed to the split BAM file. 
+Each split BAM file was run through mapDamage2.0 \cite{Jonsson:2013aa} producing damage analysis results of all 15 genomes for each of the six samples. 
+An additional bash script was prepared to count the number of sequenced reads in the pre-processed FASTQ file, and to collate the number of reads at various mapping qualities present in the initial BAM file, deduplicated BAM file and split BAM files. 
+These counts were saved to text files. 
+Script available on gitHub.
+
+\begin{figure}[ht]
+\singlespace
+\begin{center}
+\includegraphics[scale=0.45]{Rplots/generalDamageAnalysisWorkflow.pdf}
+\end{center}
+\caption[Bioinformatic workflow for assessing DNA damage patterns]{\textbf{Bioinformatic workflow for assessing DNA damage patterns}} \small{Summarises general workflowfor determining damage patterns of different microbial species present within a metagenomic sample. Prior to alignment genomes for species to be analysed are downloaded from NCBI and FASTA files concatenated to enable generation of a single BWA alignment index. The preprocessed data is then aligned with \textit{bwa aln} to extract reads representing the species of interest. As ancient sequencing data typically contains a high level of PCR duplicates, alignment files are sorted and duplicate sequences removed with Sambamba. Aligned reads are split into separate BAM files for each species with Samtools. Read length distribution and substitution frequency observed between aligned reads and the reference genome is determined with mapDamage2.0.}\label{fig:damageAnalysisWorkflow}
+\end{figure}
+
+\subsection{Analysis of damage patterns}
+
+The mapDamage2.0 program outputs 16 files for plotting and statistical estimation of damage patterns \cite{Jonsson:2013aa}. 
+Although these output files include plots of fragment length distribution and misincorporation patterns, these have not been included in this analysis. 
+Instead, raw data from the \textit{lgdistribution.txt}, \textit{misincorporation.txt}, \textit{5pCtoT\_freq.txt}, \emph{3pGtoA\_freq.txt} and \textit{Stats\_out\_MCMC\_iter\_summ\_stat.csv} files was imported into R \cite[Version 3.3.2]{R-Core-Team:2016aa} and plotted with ggplot2 \cite[Version 2.2.1]{Wickham:2009aa} to enable investigation into phenotypic variables that may affect the degree of fragmentation and cytosine deamination as well as allow comparison of damage patterns between samples.
+
+%\subsubsection{Length filtering of sequencing data prior to mapping}
+
+%Misalignment of reads as a result of DNA sequence conservation between phylogenetically divergent species can result in over or underestimation of the substitution freqency observed between aligned aDNA sequences and a reference genome, and thus inappropriate conclusions about the damage rates for individual species. 
+To investigate the impact of misalignment of short reads on estimated fragment length and cytosine to thymine substitution frequency reads shorter than 30bp were removed from pre-processed FASTQ files for Modern and Elsidron 1. 
+The length filtered data was aligned, split and processed by mapDamage2.0 and plotted as described above. 
+Plots were then visually compared to identify differences in length distribution and substitution frequency results between length filtered and non-length filtered data.
+
+%\subsubsection{Breadth of coverage}
+%
+%The breadth of coverage is the proportion of the selected microbial genomes to which reads have aligned.
+%To determine this the number of bases within the genome to which reads aligned as well as the total length of each genome in the alignment index was determined using samtools depth and written to a text file. 
+%These counts were imported into R and used to calculate breadth of coverage for each genome in each sample. 
+
+\subsection{Statistical Comparision of Damage}
+
+Statistical analysis was completed to test the following null hypotheses:
+
+\begin{enumerate}
+\item Cell wall structure has no effect on DNA fragment length
+\item Cell wall structure has no effect on misincorporation frequency
+\end{enumerate}
+$$H_0: \theta_\text{Gram negative} = \theta_\text{Gram positive}$$ 
+where $\theta$ represents:
+\begin{itemize}
+\item mean fragment length, $\mu$ (Hypothesis 1)
+\item mean misincorporation rate, $\pi$ (Hypothesis 2)
+\end{itemize}
+
+The effect of Mycobacterial and Archeal cell wall structures was not considered due to the limited amount of data for these microbial groups.
+Different samples are expected to show different levels of damage as a result of altered environmental conditions and age. 
+Therefore a mixed effects model was developed in which variation in misincorporation frequency (or log mean fragment length) between samples was considered a random effect while variation in misincorporation frequency due to cell wall structure (Gram-negative versus Gram-positive) was considered a fixed effect. 
+For clarity, only the model applied to test the null hypothesis for misincorporation frequency (Hypothesis 2) is included and described in equation 1.
+
+In double-stranded sequencing libraries, misincorporation of nucleotides due to cytosine deamination is observed as Cytosine to Thymine substitutions at the 5' end of reads and Guanine to Adenine substitutions at the 3' end of the reads. The frequencies for both of these substitutions, at the first and final position of reads respectively, was included in the model as an additional fixed effect.
+
+\begin{equation}
+y_{ijk} \sim \mu + \alpha_{i} + \beta_{j} + \gamma_{k} + \epsilon_{ijkl}
+\end{equation}
+
+where:
+
+\begin{itemize}
+\item $y_{ijk} = $ misincorporation frequency for cell wall type \textit{'i'}, of substitution type \textit{'j'}, in sample \textit{'k'}
+\item $\mu$ = mean substitution frequency
+\item $\alpha_{1}$ = 0; for Gram negative bacteria \textit{i} = 1,2
+\item $\beta_j$ = effect of different substitution types; $\beta_i$ = 0; for Cytosine to Thymine substitutions
+\item $\gamma_k$ = sample effects $\gamma_k \sim \mathcal{N}\left(0,\sigma_{\gamma}\right)$
+\item $\epsilon_{ijkl}$ = general error term $\epsilon_{ijkl} \sim \mathcal{N}\left(0,\sigma\right)$
+\end{itemize}
+
+Data for analysis was restrictued to ancient samples (Elsidron 1, Elsidron 2 and Spy I), with Spy II excluded as it was heaviliy affected by contamination. 
+Values for species to which fewer than 1000 reads had aligned were also removed.
+Anlysis was performed in R \cite[Version 3.3.2]{R-Core-Team:2016aa} using \textit{lme4} \cite[Version 1.1-12]{Bates:2015aa} and the model was fit by REML (REsidual Maximum Likelihood estimation criterion). To generate p-values Satterthwaide approximations to degrees of freedom were applied using the \textit{lmerTest} package \cite[version 2.0-33]{Kuznetsova:2016aa}.
+
+%\subsection{Pipeline Validation}
+
+\subsection{Simulated datasets}
+ 
+To benchmark the appropriateness of different short read aligners for mapping ancient metagenomic samples, several low complexity metagenomic datasets were simulated using gargammel \cite{Renaud:2017aa}.
+Twenty oral metagenomic datasets containing 1.5 million reads were simulated from 29 bacterial genomes, including four common contaminant species (two environmental contaminants and two laboratory contaminants). 
+Information about the genomes included in all simulated datasets is shown in Table \ref{table:simGenomes}. 
+Abundances for each genus were selected to reflect what is commonly observed within the oral microbiome.
+Datasets varied by length and the damage rate applied. 
+Fixed lengths of 30bp, 50bp, 70bp, and 90bp were simulated, along with an empirically observed length distribution based on a log-normal distribution of location 4 and scale 0.3. 
+For each of these length profiles deamination rates of 10\%, and 50\% were applied by specifying the following briggs parameters; 
+\begin{itemize}\singlespacing
+\item nick frequency = 0.03
+\item overhang length = 0.25
+\item $\delta_d$ = 0.01
+\item $\delta_s$ = 0.1 for 10\% deamination or 0.5 for 50\% deamination
+\end{itemize}
+An empirically observed damage profile was also simulated by calling a misincorporation matrix supplied with the gargamel program (LaBrana profile).  
+
+%For all of these datasets the damage profile remained constant for all bacterial species. 
+%By selecting both the initial fragmented dataset prior to addition of damage, and the damaged dataset prior to addition of adapters, 30 datasets are available, each with a damaged and undamaged profile.
+%
+%\begin{figure}[h]
+%	\includegraphics[scale=0.7]{Rplots/simData_setAbundance.pdf}
+%	\caption{Need caption}\label{fig:simDataAbundancesFig}
+%\end{figure}
+%\clearpage
+
+
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Thu Sep 28 01:51:08 2017
+\begin{table}[ht]
+\centering\small
+\ra{1.3}
+\setlength{\tabcolsep}{4pt} %adjust width of column spacing
+\caption{Summary of bacterial genomes used in simulated datasets}\label{table:simGenomes}
+\begin{tabular}{C{7.5cm} C{2.5cm} C{3cm} C{1.5cm} }
+  \hline
+ \textbf{Taxon} & \textbf{Abundance} & \textbf{Genus} & \textbf{GC} \\ 
+  \hline
+	Actinomyces oris strain T14V & 0.03 & Actinomyces & 68.50 \\ 
+	Actinomyces sp. oral taxon 414 strain F0588 & 0.07 & Actinomyces & 65.50 \\ 
+	Aggregatibacter actinomycetemcomitans strain 624 & 0.04 & Aggregatibacter & 44.20 \\ 
+	Aggregatibacter aphrophilus strain W10433 & 0.04 & Aggregatibacter & 42.20 \\ 
+	Agrobacterium tumefaciens strain A & 0.03 & Agrobacterium & 59.20 \\ 
+	Bacillus subtilis BSn5 & 0.03 & Bacillus & 43.60 \\ 
+	Capnocytophaga haemolytica strain CCUG 32990 & 0.04 & Capnocytophaga & 44.25 \\ 
+	Capnocytophaga sp. oral taxon 323 strain F0383 & 0.04 & Capnocytophaga & 39.40 \\ 
+	Fusobacterium nucleatum subsp. nucleatum ATCC 25586 & 0.10 & Fusobacterium & 27.00 \\ 
+	Fusobacterium nucleatum subsp. polymorphum strain ChDC F306 & 0.04 & Fusobacterium &  27.00 \\ 
+	Fusobacterium nucleatum subsp. vincentii 3\_1\_36A2 & 0.01 & Fusobacterium & 27.00 \\ 
+	Leptotrichia buccalis DSM 113 & 0.03 & Leptotrichia & 29.60 \\ 
+	Leptotrichia sp. oral taxon 847 & 0.03 & Leptotrichia & 29.75 \\ 
+	Neisseria meningitidis MC58 chromosome & 0.03 & Neisseria & 51.70 \\ 
+	Neisseria sicca strain FDAARGOS\_2 & 0.03 & Neisseria & 50.90 \\ 
+	Porphyromonas gingivalis ATCC 33277 DNA & 0.03 & Porphyromonas & 48.40 \\ 
+	Prevotella dentalis DSM 3688 & 0.03 & Prevotella & 55.86 \\ 
+	Prevotella denticola F0289 & 0.03 & Prevotella & 50.05 \\ 
+	Rothia dentocariosa ATCC 17931 & 0.04 & Rothia & 53.80 \\ 
+	Rothia mucilaginosa DNA complete genome strain: NUM-Rm6536 & 0.00 & Rothia & 59.50 \\ 
+	Sphingomonas sp. MM-1 & 0.03 & Sphingomonas & 66.09 \\ 
+	Staphylococcus epidermidis ATCC 12228 & 0.03 & Staphylococcus & 31.90 \\ 
+	Streptococcus cristatus AS 1.3089 & 0.03 & Streptococcus & 42.50 \\ 
+	Streptococcus mitis B6 & 0.01 & Streptococcus & 40.10 \\ 
+	Streptococcus mutans NN202DNA & 0.01 & Streptococcus & 36.80 \\ 
+	Streptococcus mutans UA159 chromosome & 0.05 & Streptococcus & 36.80 \\ 
+	Streptococcus oralis Uo5 & 0.07 & Streptococcus & 41.10 \\ 
+	Streptococcus sanguinis SK36 & 0.03 & Streptococcus & 43.20 \\ 
+	Veillonella parvula DSM 2008 & 0.03 & Veillonella & 38.60 \\ 
+   \hline
+\end{tabular}
+\end{table}
+\clearpage
+
+Environmental contamination often constitutes a significant proportion of the sequencing data from a given sample and may demonstrate lower levels of damage than the endogenous DNA sequences of the host, likely due to posthumous infiltration of the specimen. 
+To assess the effects of environmental contamination level on damage estimations, 16 additional datasets were simulated in which the levels of contamination was varied (see Table \ref{table:simulatedContaminationLevels}). 
+In all instances, single-stranded deamination rates of 30\% were applied to sequences representing endogenous species and 10\% to environmental contaminant sequences.  
+For each contamination level three different lengths were simulated; 50bp, 90bp, and an empirically observed distribution. A list of all simulated files, their read lengths, and damage rates can be found in Appendix B.\\
+
+\setlength{\intextsep}{5pt plus 1.0pt minus 2.0pt}
+\begin{table*}[h]\centering\small %center table & specify font size small
+\ra{1.3}
+\setlength{\tabcolsep}{8pt} %adjust width of column spacing
+\caption{Contamination levels simulated}\label{table:simulatedContaminationLevels}
+\begin{tabular}{@{}C{5cm} C{3cm} C{3cm} C{3cm}@{}}
+	\toprule
+	{\textbf{Contamination level}} & {\textbf{Endogenous content}} & {\textbf{Laboratory content}} & {\textbf{Environmental content}} \\
+	\midrule
+	Low contamination & 0.85 & 0.05 & 0.10 \\ 
+ 	Low-moderate contamination & 0.60 & 0.05 & 0.35 \\ 
+	Moderate contamination & 0.35 & 0.05 & 0.60 \\ 
+	High contamination & 0.10 & 0.05 & 0.85 \\ 
+\bottomrule\\
+\end{tabular}
+\end{table*}
+
+\subsection{Comparison of short read aligners}
+
+Simulated datasets were aligned to an expanded oral microbiome index. 
+This alignment index contained the same 15 microbial genomes used in the analysis of real data as well as an additional nine oral bacteria %(\textit{A.actinomycetemcomitans, E.sulci, L.buccalis, N.sicca, P.denticola, P.propionicum, R.dentocariosa, S.sanguins, S.gordoni}) 
+and six microbial species identified as common contaminants in aDNA. 
+A summary of the genomes included, phenotypic information and links for downloading reference genomes from NCBI, are included in appendix \ref{appendix:expandedGenomesList}.
+Alignment was performed with BWA using previously described parameters for aDNA, and also with BWA-MEM \cite{Li:2013} and Bowtie2 \cite{Langmead:2012aa} using default parameters.
+ 
+To assess the accuracy of each of these short read aligners a custom bash script was written which compared the readID for each simulated read in the BAM file with the Reference Sequence Identifier (RefSeqID) of the genome against which it aligned and counted the number of true positive and false positive alignments at each MAPQ score.
+When the read came from the genome to which it aligned this was counted as a True Positive alignment.
+When the read aligned to a genome other than the reference genome used to simulate the read this was counted as a False Positive alignment. 
+True Negative alignments were calculated by subtracting the number of false positives from the number of known negatives (reads not represented in alignment index, 780000).
+False Negative alignments were calculated by subtracting the number of True positives from the number of known positives (reads represented in the alignment index, 720000).\\
+
+\begin{table}[!h]
+\centering\small
+\caption{Classification matrix}\label{Table:classificationMatrix}
+\begin{tabular}{ C{2.5cm} L{9cm} C{3cm} }
+	\toprule
+	Terminology & Definition & Value \\
+	\midrule
+	condition positive (P) & Number of reads which are expected to align as they have been generated from a reference genome that is included in the alignment index & 720,000 (48\%) \\
+	condition negative (N) & Number of reads which are not expected to align as they have not been generated from a reference genome present in the alignment index & 780,000 (52\%) \\
+	\midrule
+		Terminology & Definition & How calculated \\ 
+	\midrule
+	true positive (TP) & Reads that align to the same reference genome from which they were simulated & \\
+	false positive (FP) & Reads that align to a genome other than the reference genome from which they were simulated & \\
+	true negative (TN) & Reads that do not align and are not expected to & N - FP \\
+	false negative (FN) & Reads that were expected to align but did not & P - TP \\
+	true positive rate (TPR) & probability that an alignment is due to the sequence coming from the genome to which it aligns & TP / (TP + FN) \\
+	false positive rate (FPR) & probability that an alignment is due to sequence conservation and not because the DNA fragment is representative of the species to which it aligns & FP / (FP + TN) \\
+	\bottomrule
+\end{tabular}
+\end{table}
+
+
+True and False positive counts for each aligned file were imported into R and the proportion of these values was plotted with ggplot2. Raw TP and FP counts were also used to calculate True Negative (TN) and False Negative (FN) values, as well as the True Positive Rate (TPR) and False Positive Rate (FPR) at various MAPQ score cut-offs. These values were plotted with ggplot2 for comparison.   
+
+\subsection{Damage estimates for simulated data}
+Simulated datasets aligned with BWA were deduplicated, split into separate BAM files for each genome in the alignment index and quality filtered with a MAPQ score greater than or equal to 25. Files with fewer than 500 reads aligning were removed and the remaining files analysed by mapDamage2.0. The resulting output data was imported into R and the nucleotide substitution frequency data plotted with ggplot2. Mean baysien estimated damage values for $\delta_d$, $\delta_s$ and $\lambda$ were also imported and plotted.
+
+
+\subsection{Damage analysis without alignment}
+Given concerns about misalignment leading to erroneous estimations of cytosine deamination rates and the frequency of other miscoding lesions, we investigated the posibility of assessing damage patterns of the sequenced data without alignment. A bash script was written to assess the length distributions of sequenced DNA fragments from trimmed and merged FASTQ files, as well as the proportion of each base for the first and last 25bp of reads. These counts were imported into R and visualised with ggplot2.
+
+
+\clearpage
+\section{Results}\label{sec:results}
+
+%\subsection{Initial assessment of damage patterns in aDNA}
+
+\subsection{aDNA Data description}\label{sssec:readCounts}
+Six high coverage sequencing samples (Elsidron 1, Elsidron 2, Spy I, Spy II, Chimp and Modern) from the Weyrich (2017) study were aligned against a multiple index containing 15 selected microbial reference genomes. Read counts for these six samples, before MAPQ filtering are summarised in Table 2.
+\\
+
+\begin{table*}[h]\centering\small %center table & specify font size small
+\ra{1.3}
+\setlength{\tabcolsep}{8pt} %adjust width of column spacing
+\caption{Summary of read counts at different stages of the initial Damage analysis}
+\begin{tabular}{@{}lrrrrrrr@{}}
+	\toprule
+	& & \multicolumn{2}{c}{Aligned} & \multicolumn{2}{c}{Duplicate} & \multicolumn{2}{c}{Remaining} \\
+	\cmidrule(lr){3-4} \cmidrule(lr){5-6} \cmidrule(lr){7-8}
+	\thead{Sample ID} & \thead{Sequenced} & \thead{Number} & \thead{\%} & \thead{Number} & \thead{\%} & \thead{Number} & \thead{\%} \\
+	\midrule
+	Chimp & 17,575,167 & 555,526 & 3.16 & 531,316 & 95.64 & 24,210 & 0.14 \\ 
+ 	Elsidron 1 & 50,238,935 & 1,332,634 & 2.65 & 760,010 & 57.03 & 572,624 & 1.14 \\ 
+	Elsidron 2 & 48,231,792 & 1,601,752 & 3.32 & 1,360,933 & 84.97 & 240,819 & 0.50 \\ 
+	Modern & 29,469,839 & 903,784 & 3.07 & 130,237 & 14.41 & 773,547 & 2.62 \\ 
+ 	Spy I & 17,604,340 & 53,150 & 1.12 & 28,168 & 98.04 & 24,982 & 0.02 \\	
+	Spy II & 4,041,681 & 45,124 & 0.30 & 44,238 & 53.00 & 886 & 0.14 \\ 
+\bottomrule\\
+\end{tabular}
+\end{table*}
+
+
+The number of sequenced reads varied significantly between samples, as did the number of reads which aligned to the genomic index. 
+Overall, only a small proportion (between 0.3 and 3.3\%) of FASTQ reads aligned from each sample (Figure \ref{fig:readCountFig}A). 
+As the dental plaque microbiome is estimated to contain more than 600 bacterial phylotypes, many of which are present at low abundance ($<$1\%) \cite{Xie:2010aa}, species included in the alignment index are expected to represent a minimal percentage of the reads. 
+
+When duplicate sequences are removed the number of reads remaining for analysis drops further. 
+More than 90\% of the aligned reads for the Chimp and Spy II samples were identified as duplicate sequences, with Elsidron 1 and Elsidron 2 samples demonstrating 57.3\% and 84.97\% duplication respectively. 
+Only in the modern sample were the majority of aligned reads identified as non-duplicate (Figure \ref{fig:readCountFig}B). 
+PCR duplication arises during library preparation when extracted DNA fragments are amplified with adapters.
+Greater duplication is observed when there is limited starting material or a significant proportion of short DNA fragments, both common occurrences in aDNA \cite{Kircher:2012aa}.
+Consequently, after alignment and de-duplication only a small fraction of the original sequencing data is available for analysis with mapDamage2.0; 2.62\% for the modern, 1.14\% for Elsidron 1 and less than 0.5\% for the remaining samples (Figure \ref{fig:readCountFig}D).
+Spy II, which was noted in the original sample to be heavily affected by environmental contamination, has only 886 reads remaining.  
+This sample was thus excluded from the analysis of microbial damage patterns as too few reads remained to estimate damage patterns.
+
+When the deduplicated BAM file is split into separate files representing alignments for each of the selected microbial species, the proportion of remaining reads for each reference genome varies considerably between samples. 
+In all but the modern sample, a large proportion of the reads aligned to \textit{Actinomyces oris}. 
+In the Elsidron 1, Spy I and Spy II samples a considerable proportion of the reads also aligned to the Archael genome \textit{Methanobrevibacter oralis}, a species that is rarely identified in modern dental calculus. 
+Instead, a significant proportion of reads within the modern sample are aligning to \textit{Fusobacterium nucleatum}. 
+These abundances correlated with relative genus abundances observed in the original microbiome profiling of samples \cite{Weyrich:2017aa}.
+While the composition and abundance of species within the oral microbiome of different individuals are expected to vary, this results is considerable variation in the number of reads available for damage analysis of each microbial species (Figure \ref{fig:readCountFig}E).
+
+\begin{figure}[h]
+	\begin{center}
+	\includegraphics[scale=0.8]{Rplots/ReadCountFig.pdf}
+	\end{center}
+	\caption[Proportion of reads sequenced, aligned, and duplicate in each sample]{\textbf{Proportion of reads sequenced, aligned, and duplicate in each sample.}\\ \small The number \textbf{(A)} and proportion \textbf{(B)} of reads aligned to the multiple genomic index (shown in red). \textbf{(C)} Proportion of aligned reads in each sample identified as PCR duplicates (shown in red) by \textit{Sambamba}. \textbf{(D)} Proportion of total reads for each sample that are available for damage analysis after alignment and deduplication (shown in red). \textbf{(E)} Proportion of reads for each genome that is available for damage analysis. Spy II sample has been excluded as too few reads remain for accurate estimation of damage patterns.}\label{fig:readCountFig}
+\end{figure}
+\clearpage
+
+\subsection{Mapping Quality}\label{sssec:MAPQ}
+
+The mapping quality of an alignment, furthermore referred to as MAPQ, is commonly used as a filtering feature for aligned sequencing data. 
+This value represents the Phred-scaled posterior probability that the mapping position of the aligned read is incorrect \cite{Li:2009aa}. 
+When sequences map equally well to multiple positions in the reference genome, BWA reports all but the optimal alignment with a MAPQ of 0. 
+%The higher the reported MAPQ, the lower the probability that a read is mapped to the incorrect position. 
+In the case of metagenomic samples that are aligned to an index containing multiple genomes, reads that represent conserved sequences between different microbial species are expected to map equally well to multiple genomes and thus be reported with a low MAPQ. 
+Thus competitive mapping and MAPQ filtering can reduce the number of misalignments due to sequence conservation between species.
+%It should be noted however, that misalignment can still occur as only a small number of representative species are included in the alignment index. 
+
+%The number and proportion of reads aligned, identified as duplicate, and remaining after de-duplication are displayed in Figure \ref{fig:MAPQfig}. 
+By plotting the number and proportion of reads aligned by MAPQ we see that approximately 10-20\% of alignments are reported with a MAPQ of 0, and almost none with a MAPQ of 10-20 (Figure \ref{fig:MAPQfig}). 
+%There is then an increase in the number and proportion of reads with a MAPQ of 25 and nearly double this amount with a MAPQ of 37. 
+Duplicate sequences appear at all MAPQ scores, with the proportion of duplicate sequences being similar to the proportion of aligned sequences at a given MAPQ. 
+When alignment files are filtered with a MAPQ value of 30 between 40-60\% of the deduplicated sequences for that sample will be available for damage analysis (Figure \ref{fig:MAPQfig}B). 
+%If the MAPQ cut-off is lowered to 25, this will increase the proportion of reads available for analysis to over 60\% (Figure \ref{fig:MAPQfig}B).
+Figure \ref{fig:MAPQfig}C shows the proportion of reads aligned to each genome within a sample, after removal of deplicate sequences. 
+In some species (e.g. \textit{Actinomyces oris, Treponema denticola} and \textit{Tannerella forsythia}) the majority of alignments are reported to have the highest MAPQ of 37. 
+In other instances, particularly those that have few reads mapping to the genome, the vast majority of alignments have a reported MAPQ of 0, suggesting they represent sequences conserved between bacterial genomes. 
+Filtering of the BAM file with a MAPQ value of 30 will mean that only a handful of reads remain for damage analysis for that genome within that sample.
+These remaining reads may still represent misalignments if they originate from species not present in the alignment index.  
+
+\begin{figure}[h]
+\setlength\abovecaptionskip{20pt}
+	\includegraphics[scale=0.75]{Rplots/MAPQfig.pdf}
+	\caption[The number and proportion of reads by Mapping Quality (MAPQ)]{\textbf{The number and proportion of reads by Mapping Quality (MAPQ).}\\ \small The \textbf{A} number and \textbf{B} proportion of reads aligned, identified as duplicate, and remaining after de-duplication plotted against MAPQ. \textbf{C} Proportion of remaining reads aligned to each genome plotting against MAPQ for the Modern and Elisdron 1 samples.}\label{fig:MAPQfig}
+\end{figure}
+\clearpage
+
+\subsection{Fragment Length}\label{sssec:fragLength}
+
+DNA sequences extracted from modern dental calculus samples demonstrate a much greater length than can be sequenced using Illumina's sequence by synthesis technology. 
+Thus, once modern DNA has been extracted and purified it is artificially fragmented typically by sonication. 
+DNA extracted from ancient samples naturally fragments overtime as a result of depurination and hydrolysis.
+Hence aDNA is used directly in library preparations without the need for sonication. 
+The median read length in ancient samples is therefore an indication of the degree of natural fragmentation and decay that the DNA sample has undergone and is used as a common indicator that sequences are ancient in origin. 
+The program mapDamage2.0 estimates the fragment length distribution of samples by generating a frequency table of sequence alignment lengths observed in the BAM file. 
+These values can then be used to infer the distribution of fragment lengths within a sample. 
+
+Fragment lengths reported by mapDamage2.0 for all genomes within a sample were collated and used to calculate observational statistics (mean, median, standard deviation, and IQR) and compared to the observed read lengths in the merged and trimmed FASTQ files for that specimen (Table \ref{table:fastqVSbamLength}). 
+Line and box plots summarising the length distribution of aDNA sequences obtained from mapDamage2.0 and preprocessed FASTQ files is shown in Figure \ref{fig:lengthDistCompare}.
+In both plots we see that the DNA sequenced from the modern sample has been fragmented to lengths comparable to what is expected in an ancient sample.
+The modern sample also has an absence of reads of length 95-100bp.
+This may be an artefact of the merging and/or trimming process but further investigation is required.
+Length distributions are positively skewed (mean $>$ median), particularly for the wild chimp sample, although this effect is less pronounce in results obtained from the FASTQ reads. 
+The lower median fragment length estimated by mapDamage2.0 likely reflects the tendency for a disproportionate number of shorter reads to align rather than relecting a more heavily fragmented DNA extract. 
+
+\begin{table*}[!h]\centering\footnotesize %center table & specify font size small
+\ra{1.3}
+\setlength{\tabcolsep}{8pt} %adjust width of column spacing
+\centering
+\caption[Mean and median read length estimated from FASTQ and BAM files]{\textbf{Mean and median read length estimated from FASTQ and BAM files}}\label{table:fastqVSbamLength}
+\begin{tabular}{@{}lrrrrrc@{}}
+	\toprule
+	& \multicolumn{2}{c}{Number of Reads} & \multicolumn{2}{c}{Mean length} & \multicolumn{2}{c}{Median length} \\
+	\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+	\thead{Sample ID} & \thead{FASTQ} & \thead{BAM} & \thead{FASTQ} & \thead{BAM} & \thead{FASTQ} & \thead{BAM} \\
+	\midrule
+	Chimp & 17,575,167 & 11308 & 56.74 & 41.36 & 52 & 36 \\ 
+  	Elsidron 1 & 50,238,935 & 325561 & 56.78 & 54.89 & 51 & 54 \\ 
+  	Elsidron 2 & 48,231,792 & 132009 & 60.22 & 55.86 & 56 & 51 \\ 
+  	Modern & 29,469,839 & 531996 & 66.94 & 63.82 & 60 & 58 \\ 
+  	Spy II & 4,041,681 & 341 & 60.93 & 48.88 & 58 & 47 \\ 
+  	Spy I & 17,604,340 & 10801 & 66.68 & 58.37 & 63 & 54 \\ 
+	\bottomrule
+\end{tabular}
+\end{table*}
+
+\begin{figure}[ht]
+	\setlength\abovecaptionskip{8pt}
+	\begin{center}
+	\includegraphics[scale=0.7]{Rplots/lengthDistComparisonFig.pdf}
+	\end{center}
+	\caption[Sample fragment length distributions estimated from BAM and FASTQ files]{\textbf{Sample fragment length distributions estimated from BAM and FASTQ files.}}\small{Aligned sequence lengths reported by mapDamage2.0 for individual genomes were collated for each sample and used to generate line \textbf{(A)} and box-plots \textbf{(B)}. Read lengths from adapter trimmed and merged FASTQ files plotted as line \textbf{(C)} and box-plots \textbf{(D).}}\label{fig:lengthDistCompare}
+\end{figure}
+\clearpage
+
+
+%Sequences from wild chimp are skewed heavily to the left (short fragments) in the mapDamage2.0 results, with a mean alignment length of 41bp. 
+%This skewed distribution is less pronounced in the results determined from the length of FASTQ reads, suggesting that the shorter overall fragment sizes estimated by mapDamage2.0 is a result of a disproportionate number of shorter reads aligning to the bacterial genomes analysed rather than  reflecting a more heavily fragmented DNA extract. 
+
+If we look at the length distribution for separate genomes within a sample, we observe significant variation between microbial species, suggesting that the DNA has been fragmented to a greater extent in some species within the same oral microbiome. 
+However, variation is also observed within the modern sample, which was fragmented by sonication and is thus not expected to demonstrate variaiton in the length of DNA fragments due to microbial phenotype (Figure \ref{fig:lengthDistCompare}). 
+Furthermore, this positively skewed length distribution is more extreme in instances where very few reads have mapped to the reference genome. 
+This suggests that these results are instead an effect of the alignment process; shorter DNA sequences are less unique and thus more likely to align or be mis-aligned due to sequence conservation between taxa.\\
+
+\begin{figure}[ht!]
+	\setlength\abovecaptionskip{10pt}
+	\begin{center}
+	\includegraphics[scale=0.7]{Rplots/fragLengthGenomeFig.pdf}
+	\end{center}
+	\small\caption[DNA fragment length distributions for different microbial species]{\textbf{DNA fragment length distributions for different microbial species.}}\small{Split BAM files were filtered by MAPQ (MAPQ $\geq$ 30) and processed by mapDamage2.0 producing a frequency table of sequence alignment lengths. This data was imported into R and plotted as line and box-plots. The estimated length distribution for individuals genomes is shown for modern (A/B) and Elsidron 1 samples (C/D) }\label{fig:lengthDistCompare}
+\end{figure} 
+
+By calculating the proportion of reads of various length which mapped we confirmed that a higher percentage of very short reads (25-30bp) were aligned, even after MAPQ filtering (Figure \ref{fig:lengthFilteredDistCompare}A). 
+Modern and Elsidron 1 sequencing data was subsequently filtered to remove reads with lengths shorter than 30bp and re-processed through the damage analysis pipeline (aligned to a genomic index with 15 microbial genomes, sorted, deduplicated and assessed with mapDamage2.0).
+The length distribution of representative genomes in each sample was then re-plotted. 
+Removing reads $<$30bp significantly reduced the number of reads that aligned to some genomes, resulting in a significant increase in the estimated mean and median fragment length in these instances. 
+For example, in the modern sample there were initially 421 reads with a MAPQ $\geq$ 30 aligning to \textit{Streptococcus mutans}, with an estimated median fragment length of 34bp. After removal of short reads from the FASTQ file, only 247 reads with a MAPQ $\geq$ 30 aligned to \textit{S. mutans} and the median fragment length increased to 46bp (see Appendix \ref{appendix:filteredLengthStats}).
+For other genomes, almost no alteration in the number of aligning reads or the estimated mean and median fragment length occurred.
+These results suggest that misalignment of short reads is occurring in some instances, which can significantly reduce the estimated median fragment length. 
+Increasing the minimum read length from 25 to 30bp may reduce the effects of misalignment.
+Furthermore, the number of reads aligning to the genome should be noted when estimating the degree of fragmentation of the sample. 
+Microbial genomes to which $<500$ reads have mapped are more likely to be impacted by misalignment and damage patterns for these species should be excluded from the analysis or viewed with caution.
+
+\begin{figure}[ht!]
+	\setlength{\abovecaptionskip}{4pt}
+	\begin{center}
+	\includegraphics[scale=0.7]{Rplots/lengthFilteredDNAfragsizeFig.pdf}
+	\end{center}
+	\caption[Effect of length filtering of FASTQ data on median fragment length estimates]{\textbf{Effect of length filtering of FASTQ data on median fragment length estimates.}} \small{\textbf{(A)}The proportion of mapped reads by length for Elsidron 1 and modern specimens was calculated by dividing the number of mapped reads of a specified length and MAPQ by the number of reads in the FASTQ file of the same length. These proportions were collated into ranged of 10bp and plotted in ggplot2. Reads shorter than 30bp were removed from modern and Elsidron 1 pre-processed FASTQ file and the filtered FASTQ data was re-processed through the damage analysis pipeline (MAPQ filter 30). Plots of fragment length distribution for each genome in the alignment index is shown for modern \textbf{(B and C)} and Elsidron 1 \textbf{(D and E)} samples.}\label{fig:lengthFilteredDistCompare}
+\end{figure}
+\clearpage
+
+
+\subsection{Genome Coverage}\label{sssec:genomeCoverage}
+
+Breadth and evenness of coverage can be used as metrics to assess whether reads have been correctly mapped to a genome or misassigned because of sequence similarity between closely related species \cite{Warinner:2017aa}. 
+DNA sequences from species present within the sample are expected to align randomly across a large portion of the genome. 
+Mis-alignment of reads due to sequence conservation between genes common to all bacterial species will result in high coverage across small portions of the genome \cite{Warinner:2017aa}.
+To assess the bredth of coverage the number of bases within the genome to which reads were aligned was determined using samtools depth and divided by the total length of the genome. 
+These results are summarised in Table \ref{table:coverage}.
+None of the genomes show complete coverage and the breadth of coverage for a given species varies widely between samples due to variation in the microbiome composition of different samples.
+It is worth noting that where coverage is below 5\% the corresponding substitution frequency plot demonstrates poor alignment indicative that the reads aligning to this reference genome a likely from a phylogenetically divergent species.
+
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Tue Oct 10 13:08:03 2017
+\begin{table}[ht]
+\centering
+\small
+\caption[Bredth of coverage for all samples]{\textbf{Bredth of coverage for all samples}}\label{table:coverage}
+\begin{tabular}{rcccccc}
+  \hline
+ Genome & Chimp & Elsidron 1 & Elsidron 2 & Modern & Spy II & Spy I \\ 
+  \hline
+	A.oris & 5.71 & 43.39 & 50.04 & 24.87 & 0.48 & 14.58 \\ 
+  	A.parvulum & 0.97 & 1.49 & 0.42 & 1.25 & 0.02 & 0.32 \\ 
+  	C.gracilis & 0.88 & 45.30 & 8.54 & 40.31 & 0.05 & 0.49 \\ 
+  	E.saphenum & 1.12 & 21.17 & 1.12 & 1.31 & 0.07 & 0.61 \\ 
+  	F.nucleatum & 3.10 & 11.57 & 6.39 & 80.93 & 0.02 & 0.38 \\ 
+  	H.influenza & 0.28 & 2.20 & 1.53 & 5.04 & 0.06 & 1.24 \\ 
+  	M.neoaurum & 0.58 & 1.11 & 0.65 & 0.97 & 0.03 & 0.64 \\ 
+  	M.oralis & 0.22 & 42.13 & 6.35 & 0.44 & 0.45 & 4.50 \\ 
+  	N.meningitidis & 0.33 & 3.14 & 4.74 & 26.39 & 0.03 & 1.12 \\ 
+  	P.gingivalis & 6.75 & 12.07 & 2.54 & 5.38 & 0.01 & 0.44 \\ 
+  	P.intermedia & 0.80 & 19.81 & 1.39 & 33.59 & 0.01 & 0.39 \\ 
+  	S.mitis & 0.31 & 7.94 & 3.99 & 35.47 & 0.35 & 4.69 \\ 
+  	S.mutans & 0.40 & 1.94 & 1.61 & 2.50 & 0.14 & 0.91 \\ 
+  	T.denticola & 0.30 & 21.37 & 4.52 & 5.04 & 0.01 & 0.15 \\ 
+  	T.forsythia & 6.36 & 33.75 & 10.39 & 67.44 & 0.01 & 0.35 \\ 
+   \hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Substitution frequency}
+Miscoding lesions occur during NGS of aDNA as a result of cytosine deamination \cite{Stiller:2006aa}.
+When sequenced reads are mapped to a reference genome, this damage is observed as an increase in the frequency of cytosine to thymine substitutions at the 5' end of a read and, in double-stranded libraries, an increase in guanine to adenine substitutions at the 3' end of reads \cite{Briggs:2007aa}.
+The program mapDamage2.0 records the occurrence of each nucleotide substitution observed between reads and the reference genome by position \cite{Jonsson:2013aa}.
+%To visualise the substitition frequency for different species within a sample 
+Substitution data for positions 1-25 from both the 5' and 3' end of reads was imported into R. 
+To compensate for bias in the base composition of the reference genome raw substitution counts were converted to a substitution frequency by dividing counts at each position by the number of occurrences of a base at that position in the reference genome. 
+%For example, the number of cytosine to thymine variants observed at position 1 of the 5' end of reads was divided by the number of cytosines observed at position 1 in the reference genome. 
+%The frequency for each of the 12 possible nucleotide substitutions was then plotted by position. 
+The frequency for each of the 12 possible nucleotide substitutions was then plotted by position.
+Substitution frequency plots for \textit{Tannerella forsythia, Fusobacterium nucleatum} and \textit{Mycobacterium neoaurum} in modern and Elsidron 1 sample data is shown in Figure \ref{fig:subDataInitialFig}.
+
+Microbes present in ancient samples show the expected increase in cytosine to thymine and guanine to adenine substitution frequency at the ends of reads (Figure \ref{fig:subDataInitialFig}B, D, and F)  which is absent in the modern and thus undamaged DNA (Figure \ref{fig:subDataInitialFig}A, C, and E).
+A small but noticeable increase in the frequency of guanine to adenine variants (~10\%), and to a lesser extent adenine to guanine variants (~5\%), are also observed at the 5' end of reads in the ancient samples (Figure \ref{fig:subDataInitialFig}B, and D). 
+This suggests that base modifications other than cytosine deamination are occurring.
+One possibility is deamination of guanine to xanthine, which, depending on the polymerase, can result in some misincorporation of thymine leading to guanine to adenine variants \cite{Stiller:2006aa}.
+Misincorporation due to xanthine may be occurring at both ends of the read but this is unclear since thymine misincorporation on the opposite strand is also observed as guanine to adenine substitutions at the 3' end.
+%Re-sequencing with single-stranded DNA library would need to occur to clarify this damage pattern.
+
+In Figure \ref{fig:subDataInitialFig}C displaying the substitution frequency observed in the modern sample for \textit{Fusobacterium nucleatum} a constant low-level increase in cytosine to thymine (C$\to$T) and guanine to adenine (G$\to$A) substitutions are seen across the reads.  
+A similar but less pronounced increase in adenine to guanine and thymine to cytosine substitution frequency is also present (Figure \ref{fig:subDataInitialFig}C). 
+This consistent difference in the frequency of transition (interchange of purine or interchange of pyrimidine bases) and transversion (interchange of a purine base for a pyrimidine) substitutions suggests that aligning reads may not be from the same reference genome but a different strain or closely related species.
+In the Elsidron 1 sample, we also observe a consistently higher level of transition substitutions across the read that is distinct from the increased substitution frequency seen at the ends of reads due to nucleotide misincorporation.
+This may again indicate that aligning reads are from a different strain than the reference genome or occur as a result of the evolutionary distance between the sequenced data and the reference genome to which reads mapped. 
+
+Both plots for \textit{Mycobacterium neoaurum} (Figure \ref{fig:subDataInitialFig}E and \ref{fig:subDataInitialFig}F) demonstrate fluctuating  nucleotide substitution frequencies across the read indicating significant sequence variation between aligned reads and the reference genome. 
+This suggests that the aligning reads are from a diverse set of closely related species but not \textit{M.neoaurum}. 
+Although misincorporation is observed at the ends of reads, in the Elsidron 1 sample, the (C$\to$T) and (G$\to$A) substitutions shown are occurring less frequently than for other genomes present in the same sample.
+This may indicate lower levels of cytosine deamination in Mycobacterium, but more likely reflects misalignment of reads resulting in an inappropriate estimation of the damage rate.
+\clearpage
+
+\begin{figure}[!ht]
+	\setlength{\abovecaptionskip}{10pt}
+	\begin{center}
+	\includegraphics[scale=0.75]{Rplots/subData_initialAnalysisFig.pdf}
+	\end{center}
+	\caption[Substitution frequency of mapped reads plotted by position]{\textbf{Substitution frequency of mapped reads plotted by position.}}\small{Nucleotide substitution frequencies observed at the 5' and 3' ends of mapped reads were plotted by position for all 15 microbial species and all samples. The subset of plots shown here represent \textit{Tannerella Forsythia} (\textbf{A} and \textbf{B}), \textit{Fusobacterium nucleatum} (\textbf{C} and \textbf{D}) and \textit{Mycobacterium neoaurum} (\textbf{E} and \textbf{F}) for modern (left hand side) and Elsidron 1 samples (right hand side). }\label{fig:subDataInitialFig}
+\end{figure}
+\clearpage
+
+The fragmentation of DNA produces short single-stranded overhangs which are more susceptible to cytosine deamination.
+Thus misincorporation frequency is highest at the first and final position of the read.
+As higher rates of misincorporation are indicative of more extensive base modification, the substitution frequency observed at the first and final position of the read, furthermore referred to as the misincorporation frequency, can be used to indicate the level of damage to a given specimen or microbial species.
+C$\to$T and G$\to$A misincorporation frequency at position one from the 5' and 3' end of reads respectively were plotted for all microbial species according to GC content, cell wall structure, and phylum.
+All microbial species in the modern and chimp samples displayed low misincorporation frequencies, indicative of their reduced age and DNA damage. 
+%Elsidron 1 and Elsidron 2 samples showed the highest misincorporation frequencies across all microbial species.
+There was no correlation between GC content and misincorporation frequency (See Appendix ?). However, gram-negative bacteria demonstrated higher misincorporation frequencies than gram-positive (Figure \ref{fig:misincoprCellWallFig}A), suggesting that cell wall phenotype impacts the degree of cytosine deamination. 
+To reduce the potential for over/underestimation of damage due to misalignment, data for microbial species to which fewer than 1000 reads had aligned was excluded and misincorporation frequency for ancient samples replotted, again revealing increased misincorporation in gram-negative bacteria (Figure \ref{fig:misincoprCellWallFig}B).
+
+\begin{figure}[ht!]
+	\setlength{\abovecaptionskip}{6pt}
+	\begin{center}
+	\includegraphics[scale=0.7]{Rplots/misincorpFreq_cellWall_Fig.pdf}
+	\end{center}
+	\caption[Misincorporation frequency at the first and final position of reads]{\textbf{Misincorporation frequency at the first and final position of reads.}} \small{Cytosine to thymine misincorporation frequency observed at position 1 of the 5' end of sequenced reads plotted side-by-side with the guanine to adenine misincorporation frequency observed at final position of reads (Position 1 counting from the 3' end). Points are coloured according to cell wall type. \textbf{A} includes the misincorporation frequency for all samples excluding Spy II. \textbf{B} includes only ancient samples and excludes any frequencies calculated from genomes to which fewer than 1000 reads aligned.}\label{fig:misincoprCellWallFig}
+\end{figure}
+ 
+
+When misincorporation frequency is clustered according to phylum, we observe higher levels of damage in Bacteroidetes microbes and lower deamination rates for Actinobacteria (Figure \ref{fig:misincoprPhylumFig}A).
+Baysien damage estimates from the same samples and genomes were also imported from mapDamage2.0 and plotted according to cell wall phenotype (Figure \ref{fig:misincoprPhylumFig}B). 
+A higher double-stranded deamination rate ($\delta_d$) was estimated for gram-negative bacteria, and shorter length single-strand overhangs indicated by the lower estimated values for $\lambda$.
+This data supports the conclusion of more extensive DNA damage in gram-negative bacteria suggested by the higher misincorporation frequencies.
+However, the probability for cytosine deamination in single-stranded ends ($\delta_s$) for almost all genomes is at or close to the highest value of 1, preventing any correlation from being observed between this value and cell wall phenotype.
+
+\begin{figure}[ht!]
+	\setlength{\abovecaptionskip}{6pt}
+	\begin{center}
+	\includegraphics[scale=0.72]{Rplots/subFreq_by_phylum_and_briggsFig.pdf}
+	\end{center}
+	\caption[Estimated damage levels and misincorporation frequency.]{\textbf{Estimated damage levels and misincorporation frequency.}}\small{\textbf{(A)} Misincorporation frequency at the first and final position of reads coloured according to phylum. Includes only ancient samples and excludes any frequencies calculated from genomes to which fewer than 1000 reads aligned. \textbf{(B)} Mean values for $\delta_d$, $\delta_s$ and $lambda$ estimated by mapDamage were imported and plotted according to cell wall type for ancient samples. Only values for genomes to which more than 1000 reads had aligned were included.}\label{fig:misincoprPhylumFig}
+\end{figure}
+\clearpage
+
+\subsection{Statistical Analysis}
+
+A linear mixed effects model was employed to investigate whether the observed differences in mean fragment length and misincorporation frequency for gram-positive and gram-negative bacteria in ancient samples was statistically significant.
+No difference in mean fragment length was observed between microbial species, supporting the null hypothesis that \textit{'cell wall structure does not affect DNA fragmentation'}.
+%To assess if the observed differences in misincorporation frequencies were statistically significant we constructed a linear fixed effects model of misincorporation frequency as a function of cell wall type (gram-positive vs gram-negative) and substitution (C$\to$T at the 5' end; and G$\to$A at the 3' end) accounting for variance due to sample. 
+Misincorporation frequencies differed significantly between gram-negative and gram-positive species (t value -5.006, p-value $<$ 0.001), with gram-negative bacteria demonstrating higher misincorporation frequencies indicative of increased cytosine deamination. 
+Furthermore, G$\to$A substitution frequencies (3' end) were shown to be significantly higher than C$\to$T substitutions (5' end)  (t value 3.059, p $<$ 0.01).
+Based on this result the null hypothesis can be rejected, and the alternative hypothesis \textit{'Cell wall structure affects misincorporation frequency'} can be accepted.\\
+
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Thu Oct 19 07:43:26 2017
+\begin{table*}[h]\centering\small %center table & specify font size small
+\ra{1.5}
+\setlength{\tabcolsep}{6pt} %adjust width of column spacing
+\caption[Linear fixed effects model - Coefficients of fixed effects]{\textbf{Linear fixed effects model - Coefficients of fixed effects}}\label{table:stats output}
+\centering
+\begin{tabular}{@{}R{3cm} R{2cm} R{2cm} R{2cm} R{1.5cm} L{3cm}@{}}
+%\begin{tabular}{rrrrrr}
+  \toprule
+ & Estimate & Std. Error & Degrees of freedom & t value & p value \\ 
+  \midrule
+(Intercept) & 0.35105 & 0.04600 & 2.02036 & 7.631 & 0.0162717* \\ 
+  Cell Wall \newline(Gram positive) & -0.07551 & 0.01509 & 27.51689 & -5.006 & 0.0000285*** \\ 
+  Substitution (GtoA) & 0.04154 & 0.01358 & 26.85425 & 3.059 & 0.0049871** \\ 
+   \bottomrule\\
+\end{tabular}
+   Significance codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05
+\end{table*}
+\clearpage
+
+%We constructed a linear fixed effects model of misincorporation frequency as a function of cell wall type (Gram positive vs Gram negative) and accounting for variance due to sample. 
+%This model was significant for both cytosine to thymine misincorporation frequencies observed at position 1 of the 5' end of reads (t value -3.311, p-value < 0.01) and guanine to adenine misincorporation frequencies at position 1 of the 3' end of reads (t value -3.849, p-value < 0.01)
+%
+%A linear mixed effects model was employed to investigate whether the observed differences in misincorporation frequency for gram positive and gram negative bacteria in ancient samples was statistically significant. 
+%Given that substitution frequency values for genomes to which fewer than 1000 reads have aligned are more likely to be less reliable or represent spurious alignments, these values were removed and the analysis performed on the remaining 16 data points. 
+
+
+\subsection{Comparison of short read aligners}
+
+Reliable estimations of damage patterns are dependent on the accurate alignment of reads and typically requires a few thousand sequences from the genome of interest \cite{Warinner:2017aa}.
+Thus alignment algorithms employed during damage analysis need to show high sensitivity, map the majority of reads representative of a given species, but limit misalignment due to sequence conservation between closely related species within a sample.
+A previous study conducted by \cite{Schubert:2012aa}  assessed the accuracy and sensitivity of the Burrows Wheeler Aligner (BWA) for mapping mammalian aDNA sequencing data and recommended optimized parameters for mapping aDNA extracts. The majority of aDNA studies have since employed BWA with the suggested settings.
+With the development of newer, more efficient alignment algorithms, additional research into the accuracy and sensitivity of programs for mapping paleomicrobial data is warranted.
+
+Simulated datasets were aligned to 30 reference microbial reference genomes using BWA \cite{Li:2009aa} with aDNA parameters, BWA-MEM \cite{Li:2013} using default parameters and Bowtie2 \cite{Langmead:2012aa} using default parameters. 
+The number of True Positive and False Positive alignments for each mapping algorithm is shown inFigure \ref{fig:mappingAccuracy}A. 
+Bowtie2 demonstrated a lower proportion of false positive alignments, but also fewer true positives than BWA or BWA-MEM, as a smaller proportion of reads were aligned overall. 
+This reduced sensitivity limits the amount of data that can be extracted from ancient metagenomic samples if Bowtie2 is used for alignment. BWA consistently demonstrated high sensitivity, regardless of read length (Note - 48\% of reads within the sample belong to genomes in the alignment index). More false positive alignments are observed in samples containing very short reads (30bp). 
+BWA-MEM also demonstrated high sensitivity, identifying most of the known true positive alignments even when a high degree of damage was simulated (deamination rate of 0.5). 
+The exception is for reads of 30bp where an increase in damage (deamination rate) reduces the number of true positive alignments. 
+
+To better compare the effectiveness of each aligner the true positive rate (TPR) and false positive rate (FPR) was calculated at various MAPQ cut-off's, as shown in Figure \ref{fig:mappingAccuracy}B. 
+BWA-MEM demonstrates similar results to BWA, regarding TPR, but a slightly higher FPR for longer reads. For very short reads (30bp) BWA-MEM demonstrates a lower FPR than BWA, but at the expense of fewer true positive alignments when reads are damaged. 
+MAPQ filtering appears to have little effect on the TPR and FPR demonstrated by BWA-MEM. 
+Filtering alignments with a MAPQ cut-off of 25 decreases the FPR demonstrated by BWA, particularly in the case of short reads.
+There is no further decrease in FPR with a MAPQ cut-off of 30. 
+Based on these results BWA-MEM gives only slighly poorer results when extracting species-specific microbial sequences from metagenomic samples.
+Given the increased computational efficiency of this algorithm \cite{Li:2013}, and the potential for improvements in accuracy and sensitivity with optimization of parameters, BWA-MEM may be an appropriate aligner for future aDNA research. 
+
+
+\begin{figure}[ht!]
+	%\setlength{\abovecaptionskip}{2pt}
+	\begin{center}
+	\includegraphics[scale=0.7]{Rplots/MappingAccuracyFig.pdf}
+	\end{center}
+	\small\caption[Accuracy and Sensitivity of BWA, BWA-MEM and Bowtie2 using ancient metagenomic data simulated with gargamel.]{\textbf{Accuracy and Sensitivity of BWA, BWA-MEM and Bowtie2 using ancient metagenomic data simulated with gargamel.} \footnotesize{\textbf{(A)} Proportions of true positive and false positive alignments for each mapping program shown for 20 simulated datasets with varying lengths and deamination rates ('0.1\_damaged' indicates 10\% deamination, '0.5\_damage' represents 50\% deamination, 'Real-profile\_damaged' indicates ~20\% deamination simulated with empirically observed substitution frequencies). \textbf{(B)} True Positive Rate against False Positive Rate for different MAPQ cut-offs.} }\label{fig:mappingAccuracy}
+\end{figure}
+\clearpage
+
+False positive rates calculated above could be considered overestimations as they did not take into account the mapping of reads to a genome of the same species but a different strain. 
+To investigate more closely where and when misassignment of reads was occuring, deduplicated BAM files aligned with BWA were split into separate files for each microbial species in the alignment index. 
+The readIDs for each aligned sequence, which included the reference for the original species from which the read was simulated, was extracted, sorted and counted for each split BAM file.
+Using this data, plots of true hits (aligned read simulated from the same species, although possible a different strain, to which it aligns) and spurious hits (alignment of read to a genome of a different species) were generated, confirming that spurious alignment is more common with short reads (30bp). 
+With longer reads, MAPQ filtering at 25 removes spurious alignment for some genomes in the alignment index (H.influenza, P.propionicum, S.roseum) but not others. 
+By counting the number of reads from each originating species aligning to each genome and plotting this as a proportion we can see that spurious alignment is typically occuring because there is a closely related species in the sample not represented in the alignment index (Figure \ref{fig:whatSpeciesAligningFig}A).
+For example, \textit{Streptococcus gordonii} is not present in the simulated metagenomic data.
+Instead reads simulated from \textit{Streptococcus oralis} and \textit{Streptococcus cristatus} are aligining to this reference genome.
+Thus the presence of closely related species, either as endogenous components of the microbiome or exogenous contaminant sequences from the environment, can result in misalignment of reads.
+
+
+\begin{figure}[ht!]
+	\begin{center}
+	\includegraphics[scale=0.7]{Rplots/whatSpecesAligningFig.pdf}
+	\end{center}
+	\caption[Proportion of spurious alignments reported by BWA for metagenomic datasets simulated with gargamel.]{\textbf{Proportion of spurious alignments reported by BWA for metagenomic datasets simulated with gargamel.}}\small{\textbf{(A)} Proportion of spurious hits (alignment of a read to a genome of a different species) for simulated datasets of various lengths and deamination rates. \textbf{(B)} Plot showing the the species of origin for which aligned reads were simulated as a percentage of reads aligning to each reference genome.}\label{fig:whatSpeciesAligningFig}
+\end{figure}
+\clearpage
+
+
+\subsection{Assessment of substitution frequency of simulated data}
+Simulated datasets were aligned with BWA (aDNA parameters) to a multiple index of 30 microbial genomes. The resultant alignment file was filtered to include only alignments with a MAPQ of 25 or greater and then split into separate files for each microbial species.  
+Split BAM files were processed in an identical manner to aDNA data and plots of substitution frequency and baysien damage estimates generated. 
+By comparing the substitution frequency plots whith the known proportion of each species aligning to the reference genome we observe some clear patterns.
+For \textit{P.gingivalis}, in which more than 99\% of the aligning reads were simulated from the reference genome to which they aligned the only substitutions observed are a result of the simulated deamination (Figure \ref{fig:simDataSubPlotFig}A).
+Where the reads aligning to the reference genome come from different strains of the same speices for the reference genome in the alignment index (Figure \ref{fig:simDataSubPlotFig}B) there is a contant increase in type I transition substitutions (C$\to$T and G$\to$A) across the read in addition to the significant increase in substitution frequence at the ends of reads due to misincorporation.
+In the case of \textit{S.mitis} (Figure \ref{fig:simDataSubPlotFig}C) transition mutations (G$\to$A, C$\to$T, A$\to$G and T$\to$C) are observed across the aligned reads. Thi can be attributed to the fact that 50\% of the reads contributing to the analysis originate from a closely related Streptococcus species.
+Where all of the aligning reads have come from closely related species the substitution frequency fluctuates across all positions, although the damage to the ends is still visible as all reads in this simulated dataset were damaged to the same degree.
+
+
+\begin{figure}[ht!]
+	\setlength{\abovecaptionskip}{6pt}	
+	\begin{center}
+	\includegraphics[scale=0.6]{Rplots/simDataSubPlotFig.pdf}
+	\end{center}
+	\small\caption[Substitution frequency for simulated metagenomic datasets plotted by position.]{\textbf{Substitution frequency for simulated metagenomic datasets plotted by position. }{Substitution frequencies were reported by mapDamage2.0 for simulated datasets aligned to 30 reference genomes with BWA. Plots of substitution frequency by position in the read are shown on the left-hand side, while a pie chart depicting the proportion of reads aligning to the genome coloured by species from which the reads were simulated. Each of the results here is from a single dataset simulated with read lengths of 70bp and single-stranded deamination rate of 50\% for alignments to \textit{P. gingivalis} \textbf{(A)}, \textit{F. nucleatum} \textbf{(B)}, \textit{S. mitis} \textbf{(C)} and \textit{S. gordonii} \textbf{(D)}.}}\label{fig:simDataSubPlotFig}
+\end{figure}
+\clearpage
+
+Observing the values for C$\to$T and G$\to$A substitution frequency at the first and final position of reads we observe similar frequencies for all datasets with the same simulated level of damage. 
+Where a 10\% single stranded cytosine deamination rate was applied we observe a substitution frequency of ~0.8 at both ends of the read.
+When 50\% deamination was simulated the substitution frequency appears to be ~0.36.
+The presence of spurious alignments does results in over/under estimation of these frequencies in several instancs (Figure \ref{fig:subValues_simDataFig}A).
+Bayseien damage estimates reported by mapDamage2.0 for these results is as expected for delta.D and lambda (0.01 and 0.25 respectively). However, the probability of observing cytosine deamination in single stranded ends is nearly double the value applied when simulating the datasets (Figure \ref{fig:subValues_simDataFig}B).
+These results confirm that misalignment of metagenomic sequencing data does occur and can affect the level of damage estimated by mapDamage2.0. 
+Consequently, the presence of closely related species within the specimen, either as endogenous components of the microbiome or environmental contaminants must be considered when determining the validity of damage estimates. 
+It should also be noted that small increases in misincorporation frequency observed at the ends of reads results in inflated estimations of single-stranded cytosine deamination ($\delta_s$). 
+Thus $\delta_s$ may not be an appropriate measure by which to compare damage rates between species or specimens.
+
+\begin{figure}[ht!]
+	\setlength{\abovecaptionskip}{6pt}
+	\begin{center}
+	\includegraphics[scale=0.75]{Rplots/subValues_simData_fixedAbundanceFig.pdf}
+	\end{center}
+	\small\caption[Misincorporation frequency and damage parameters estimated by mapDamage2.0 for metagenomic datasets simulated with gargamel.]{\textbf{Misincorporation frequency and damage parameters estimated by mapDamage2.0 for metagenomic datasets simulated with gargamel.} \textbf{(A)} Misincorporation frequency for the first and final position of reads for simulated datasets with fixed microbial abundances. \textbf{(B)} Baysien damage estimates output by mapDamage2.0 plotted according to damage levels applied to simulated datasets.}\label{fig:subValues_simDataFig}
+\end{figure}
+\clearpage
+
+\subsection{Damage analysis without alignment}
+
+Given concerns that mis-alignment of reads due to conservation in DNA sequence may over or underestimate damage patterns, attempts were made to estimate the misincorporation frequency observed in sequencing data without alignment. 
+If misincorporation is occuring due to cytosine deamination an increased proportion of thymine bases and a decreased proportion of cytosine bases at the 5' end of sequenced reads is expected, regardless of the original organism from which the DNA was extracted. 
+A similar increase in the proportion of adenine and decrease in the proportion of guanine bases is expected at the 3' end of reads. 
+To observe this effect we developed a script to extract the number of each nucleotide at the first and last 25bp of the sequenced reads directly from the pre-processed FASTQ file. 
+This script was run on the simulated fasta files as well as the real aDNA data.
+
+For the simulated datasets the \%GC and \%AG remains contant for samples where no cytosine deamination was simulated (Figure \ref{fig:damageWithoutAlignment}A). 
+For damaged samples, we observed the expected increases in T/A and decreases in C/G at the ends of reads, with a greater change in base proportion observed with higher levels of simulated damage (Figure \ref{fig:damageWithoutAlignment}B-D).
+In samples where the level of contaminant sequences varies there is a change in the \%GC, correlating with the higher GC content of genomes representing environmental contaminants. 
+When a high level of environmental contamination is simulated, there is a reduction in the base change proportions (Figure \ref{fig:damageWithoutAlignment}E-F) owing to the lower deamination rate applied to the environmental contaminant sequences.
+
+Reviewing the base proprotion plots for the real aDNA datasets, the pattern is less clear but still present. 
+For the Elsidron 1 sequencing data there is an increased proportion of thymine bases at the 5' end and an even greater increase in adenine bases at the 3' end, correlating with the high G$\to$A substitution frequency observed at the 3' end of reads.
+Conversely, in the modern sample while there is some variation in base proportions at the 5' ends, possibly due to sequencing error, the proportion of bases remains relatively constant across the first and last 25bp of reads (Figure \ref{fig:damageWithoutAlignment}G-H).
+This pattern, which can be observed in raw sequence data from the fastqQC reports, can therefore indicate the presence or absence of DNA damage in sequencing data, provided adapters have been properly trimmed.
+If any adapter sequence remains, then this is going to have a significant effect of the base proportions.
+For example, in the Spy I sample (Figure \ref{fig:damageWithoutAlignment}I) the proportion of bases remains constant across the read but demonstrates a sudden and significant increase in the proportion of adenine bases at position 1 of the 5' end, suggests that the adapter has not been completely trimmed from all sequences in this sample.
+Re-plotting the results without the ultimate base at each end we see that the proportion of bases remains relatively constant across all DNA sequences(Figure \ref{fig:damageWithoutAlignment}J), indicating a lack of cytosine deamination damage and suggesting that the majority of reads in this sample represent contaminant sequences and not valid aDNA.
+This supports the original analysis of the Spy I sample by \citeA{Weyrich:2017aa} showing that the majority of extracted DNA was environmental contaminant.
+
+\begin{figure}[ht!]
+	%\setlength{\abovecaptionskip}{1pt}
+	\begin{center}
+	\includegraphics[scale=0.75]{Rplots/damageWithoutAlignmentFig.pdf}
+	\end{center}
+	\small\caption[Base proportions for the first and last 25bp of sequenced reads]{\textbf{Base proportions for the first and last 25bp of sequenced reads.} Plots \textbf{A-D} represent simulated datasets for undamaged \textbf{(A)}, 10\% deamination \textbf{(B)}, 50\% deamination \textbf{(C)} and ~20\% deamination \textbf{(D)} with read lengths of 50bp. Plots \textbf{E-F} represent simulated datasets of length 90bp and variable contamination levels; moderate contamination \textbf{(E)} and high contamination \textbf{(F)}. Base proportions for Elsidron 1 \textbf{(G)}, modern \textbf{(H)} and Spy I \textbf{(I)} are shown. Plot \textbf{(J)} shows base proportions of Spy I after removal of the first base at both ends of the read. }\label{fig:damageWithoutAlignment}
+\end{figure}
+\clearpage
+
+\section{Discussion}\label{sec:discussion}
+
+\subsection{Comparison of damage patterns between microbial species}
+
+Few studies to date have explored differences in the damage patterns and cytosine deamination rates of different microbial taxa or attempted to correlate this with known phenotypic characteristics.
+This is in part due to the limited availabilty of appropriate specimens for analysis and the fact that few studies have employed high coverage shotgun sequencing data.
+Early paleomicrobial studies relied on PCR amplification of marker genes \cite{Spigelman:1993, Matheson:2009aa,Tito:2012aa, Adler:2013aa} to identify and characterise microbes within specimens.
+However, PCR amplification results in loss of damage signals from the ends of DNA fragments, preventing characterisation of DNA damage patterns through bioinformatic means.
+Comparison of damage levels between studies or specimens is further complicated by the considerable differences in DNA damage and contamination levels observed between specimens, even those of a similar age \cite{Allentoft:2012aa}.
+Dental calculus provides a unique and rich source of microbial DNA that has been subjected to the same conditions and thus same damage pressures enabling this type of comparison \cite{Ziesemer:2015aa, Weyrich:2017aa}.
+
+Only recently, with reduced sequencing costs, have high-throughput metagenomic sequencing approaches been applied to ancient samples.
+However, a problem with using dental calculus as a source of material is the extensive variability in bacterial diverstiy and abundances within the microbiome of different specimens. 
+Also, given that many of these species are present at low abundance, very little of the sequencing data represents DNA from a single genus/species, providing a limited number of reads for analysis \cite{Weyrich:2017aa,Warinner:2014aa,Ziesemer:2015aa}. 
+As the reliability of estimating damage decreases with the quantity of reads available this may impact results. %\cite{Warinner:2017aa}. 
+
+DNA sequences from the ancient specimens analysed demonstrate short fragment lengths ($<$100bp) consistent with degradation due to depurination followed by strand breakage \cite{Briggs:2007aa,Brotherton:2007aa}.
+However, the reported length distribution of aDNA sequences is affected by the estimation method.
+The program mapDamage2.0 estimates median DNA fragment length from the length of the aligned sequences reported in the BAM file \cite{Jonsson:2013aa}. 
+Thus the accuracy of the estimated mean and median fragment length is dependent on the accuracy of the alignment performed.
+%Estimated lengths may be 1-2bp shorter than the original DNA fragment due to allowences for gaps in the alignment of the reads. 
+By comparing the length distribution of reads found in the FASTQ file with the distribution of fragment lengths which aligned we see that a much higher proportion of short reads ($<$30bp) are mapped. 
+This is not unexpected given that shorter sequences are less unique and therefore more likely to be represented in multiple microbial genomes. 
+However, misalignment of short reads can skew the resultant length distribution and imply that extracted DNA has undergone greater depurination and fragmentation than has actually occurred.
+When the species of interest is absent from the specimen or present in very low abundance, the effects of misalignment of short reads on reported median fragment length is much more pronounced.
+Consequently, very short reads should be removed from the data prior to alignment, to reduce the opportunity for misalignment.
+Alternatively, damage estimates obtained for microbial genomes to which fewer than 1000 reads have aligned should be excluded from the analysis.
+
+After exclusion of taxa with very few aligning reads ($<$1000) we observe no apparent difference in the degree of fragmentation of aDNA for different microbial species, consistent with a previous analysis of the same data \cite{Weyrich:2017aa}. 
+Thus cell wall structure does not appear to be affecting the fragmentation of DNA between gram-positive and gram-negative bacteria as previously suggested \cite{Ziesemer:2015aa}. 
+There are however, observable differences in the nucleotide misincorporation rate observed at the ends of DNA fragments as a result of cell wall structure and phylum.
+Mycobacterium demonstrate a lower misincorporation frequency (21.4\% Ct$\to$T and 26.2\% G$\to$A) than all other cell types for a given sample although, results from additional Mycobacterium species within a sample, or observation of this trend across a greater number of samples is required to confirm this trend.
+Reduced nucleotide misincorporation patterns have been shown previously for Mycobacterium, with the lipid-rich cell wall being proposed to protect the DNA from hydrolytic damage \cite{Schuenemann:2013aa}.
+
+In contradiction of previous reports \cite{Weyrich:2017aa,Ziesemer:2015aa}, 
+gram-positive bacteria also demonstrate a lower misincorporation frequency at the first and final position of the read (mean 30.5\% C$\to$T, 34.6\% G$\to$A) than gram-negative bacteria (mean 39.5\% C$\to$T, 43.7\% G$\to$A) regardless of GC content.
+By plotting the data according to phylum we additionally observe that gram-negative Bacteroidetes show the highest misincorpoation rates, while gram-positive Actinobacteria demonstrate lower overall nucleotide substitution frequencies. 
+As with Mycobacterium differences in cell wall structure between gram-positive and gram-negative bacteria may explain this result with the thicker cell wall of gram-positive bacteria (20-80 nm) being more effective at retaining intracellular DNA compared with the relatively thin cell wall of gram-negative bacteria ( $<$10nm).
+In a study conducted by \citeA{Brundin:2015aa} cultures of \textit{Fusubacterium nucleatum} (gram-negative) and \textit{Peptostreptococcus anaerobius} (gram-positive) were killed by exposure to air and stored for several months. 
+Periodic observation and PCR amplification of DNA demonstrated that the gram-negative species demonstrated more pronounced morphological changes correlated with greater cell wall permeability and progressive loss of DNA \cite{Brundin:2015aa}.
+As cell-bound DNA persists for longer time periods than free DNA \cite{Brundin:2013aa}, intracellular retention as a result of cell morphology could account for decreased cytosine deamination rates in some microbial cell types.
+
+Although this is the first report, based on nucleotide substitution patterns, of gram-positive bacterium demonstrating lower levels of DNA damage compared to gram-negative, a previous study looking at the persistance of bacterial DNA over geological time through PCR amplification of permafrost bacteria also demonstrated that non-spore forming gram-positive Actinobacteria persisted for longer time periods than gram-negative bacteria \cite{Willerslev:2004aa}.
+It was also noted by Adler et al. (2013) that the proportion of gram-negative bacteria identified in ancient dental calculus decreased with increasing age of samples, with Bacteroidetes and Fusobacteria demonstrating a statistically significant reduction in relative abundance correlated with sample age. 
+Additionally, modern studies investigating the effect of sample freezing on the estimations of micorbiome community composition demonstrated that freezing of stool samples resulted in a reduction in the relative abundance of Bacteroidetes (gram-negative) compared to Firmicutes (gram-positive) as a result of freeze storage \cite{Bahl:2012aa}. 
+These observations are thought to be a result of differences in cellular composition, but may have not been linked directly to increased levels of DNA damage in some microbial species. 
+However, as the presence of DNA damage is know to affect the ability to PCR amplify extracted DNA \cite{Hoss:1996aa}, it is not unreasonable to conclude that increased levels of cytosine deamination or other forms of DNA damage that are more common in gram-negative bacteria may result in reduced detection of these species in microbiome samples and consequently skewed estimates of relative abundance. 
+
+\subsection{Are current aDNA analyses accurate for microbial species}
+
+It is worth noting that the differences in the extent of cytosine deamination described here are based on substitution frequencies observed for the first and final position of the read as opposed to the baysien estimates of DNA damage reported by mapDamage2.0. 
+When considering the estimated rate of double stranded deamination ($ \delta_{d} $), single stranded deamination ($ \delta_{s}$), and length of single stranded overhangs ($\lambda$) we note higher levels of double stranded deamination and shorter single stranded overhangs in Gram negative bacteria, consistent with higher levels of damage inferred from the nucleotide substitution frequencies. 
+However, in both Gram positive and Gram negative bacteria, the probability of single stranded cytosines being deaminated is reported to be at or close to 1 suggesting all cytosines in single stranded overhangs have been deaminated.
+Such a high level of deamination does not allow for discrimination between levels of damage for different cell types.
+
+It is interesting that high $\delta_{s}$ values are also observed for the simulated datasets.
+Datasets with fixed abundance and damage rates were simulated by supplying the following briggs parameters to the program gargamel:
+$\nu$ 0.03, $\lambda$ 0.25, $\delta_{d}$ 0.01, $\delta_{s}$ 0.1 or 0.5.
+When these datasets are analysed by mapDamage2.0 we observe an estimated $\delta_{d}$ and $\lambda$ close to the values supplied, but the estimated $\delta_{s}$ is nearly double the value that was simulated. 
+Similarly high values of $\delta_{s}$ are reported for datasets simulated by calling on an empirically observed substitution matrix (LaBrana profile) provided with the gargamel program, which produced a substitution frequency of ~0.17 C to T and ~0.15 G ot A. 
+It appears that even small increases in the substitution frequency at the ends of reads results in a drastic increase in the estimated rates of single stranded cytosine deamination. 
+Consequently, nucleotide substitution frequencies or the ratio of $\delta_{d} to \delta_{s}  $ may be more appropriate approximations of damage levels in highly degraded DNA.
+
+What is apparent from mapDamage2.0 analysis of simulated datasets is that spurious or misalignment of reads to the reference genome result in over and/or under estimation of the levels of damage affecting the species. 
+This is expected given that increased sequence variation observed between genomes of more distantly related species.
+Thus the potential for misalignment, which is more likely with complex metagenomic datasets containing closely related species and short read lengths, must be considered carefully when reporting the amount of damage occuring in the sample. 
+Comparison of the rate of true positive and false positive alignments observed by different short read aligners demonstrated that the use of BWA with parameters specific for aDNA results in greater recall than Bowtie2 and a reduced proportion of misalignment than BWA-MEM, and should continue to be used in paleomicrobial analysis. 
+BWA-MEM does however demonstrate similar results to BWA, and a lower false positive rate on very short reads ($<$30bp).
+By optimizing the parameters for BWA-MEM it is concievable that this alignment algorithm may perform equally well for the alignment of aDNA, a desirable result given the increased efficiency and thus shorter time frame with which BWA-MEM performs alignment.
+
+Previous comparisons of short read aligners typically involved generating simulated reads from a single genome and mapping these reads back to the same genome. 
+This simple comparison does not allow for investigation into the effects of having closely related species on the alignment.
+The method described here represents a novel method for quantifying the extent of misalignment in metagenomic samples and then investigating the impact this has on estimated damage levels.
+Spurious alignment occurs more frequently when closely related species are present in the metagenomic sample but are not included in the alignment index, and this can affect the observed substitution frequency and thus damage estimates. 
+These spurious hits are not consistently eliminated through MAPQ filtering but instead are better dealt with by excluding short reads from the data prior to alignment and removing species with very few reads aligning from the analysis. 
+Close examination of the level of transversion mutations is also recommended. 
+Where misalignment of divergent species is occuring higher levels of transversion mutations will be observed accross the read. 
+
+Assessment of the level of damage affecting a sample can also be performed by assessing the change in base proportions at the ends of reads in pre-processed FASTQ files.
+Higher levels of cytosine deamination and thus miscoding lesions results in an observed increase in the proportion of Thymine at the 5' end of reads and an increased proportion of Adenine at the 3' end.
+These results should however be viewed with caution.
+The method of sequencing adapter ligation employed during libary preparation has been shown to affect this trend {ref].
+Furthermore, incomplete removal of adapters will also result in a substantial increase in the proportion of particular bases at the ends of reads.
+However, this approach may be useful as a tool for assessing the extent of modern contamination affecting the sequencing data, as increasing levels of contamination will decrease the change in base proportions observed.
+Thus this simple preliminary analysis performed as part of the fastQC process may assist researcher in determining the quality of the aDNA sample and enable more informed decisions to be made about additional sequencing efforts prior to more extensive data analysis.
+Additionally, this method may be used to indicate present of damage in instances where there is no reference genome against which sequencing data can be aligned.
+
+Given relative small number of specimens and microbial taxa explored in this study results show limited statistical power.
+Application of the described profle to additional shotgun sequencing data obtained from dental calculus is recommended to confirm that the observed trends are consistent across specimens from a wider time span and stored under varied environmental conditions. 
+However, it is important to recognise that library construction protocols and sequencing approaches will impact the detected patterns, which may limit the amount of data available for analysis or must be included as a confounding variable. 
+For example, paleogenomic studies in which partial-UDG treatment is applied to remove uracil from the ends of extracted DNA fragments also results in lower or absent cytosine deamination signals[ref].
+Adapter ligation procedures can likewise alter deamination footprints \cite{Seguin-Orlando:2013aa}.
+Sequencing depth can also impact accuracy and precision with which DNA damage is estimated.
+A few thousand reads aligning to the genome of interest is ideally required to obtain reliable estimates of cytosine deamination \cite{Warinner:2017aa}. 
+Even in the specimens analysed which had been sequenced to high coverage, some taxa had fewer than 1000 reads aligning and thus needed to be excluded from statistical comparison. 
+Thus additional sequencing data from ancient dental calculus specimens that have been sequenced to low coverage may not provide enough reads aligning to taxa of interest to enable reliable comparisons.
+
+One way to overcome this is to expand the genomic index of microbial genomes to which shotgun data is aligned in order to extract information from additional genera and species not included in this analysis.
+The extent of this is however limited by the number of complete microbial reference genomes currently available. 
+While the number of microbial reference genomes available in NCBI RefSeq database has expanded from 2670 assembled genomes in October 2013 \cite{Tatusova:2015aa}, to more than 28000 prokaryotic genomes in October 2014, although many of these records represent partial genomes or assemblies consisting of multiple contings and scaffolds \cite{Tatusova:2015ab}.
+Only 8655 complete fully assembled prokaryotic genomes are currently available (as of October 2017, https://www.ncbi.nlm.nih.gov/genome/browse/), and only a small proportion of these may be found in oral microbiome. 
+The distribution of microbial phyla to consider is also limited as most sequencing projects are biased toward human pathogenic species \cite{Mukherjee:2017aa}
+In time, as more genomes become available, a more comprehesive investigation into the effect of phylum on differences in DNA damage may become possible.
+\clearpage
+
+%\begin{itemize}
+%\item DNA bound to minerals in the environment (e.g. hydroxyapatite) are protected from spontaneous decay, as well as degradation by DNases \cite{Brundin:2013aa}
+%\item hydroxyapatite is a key component of inorganic part of dental calculus \cite{Sundberg:1985aa}
+%\item Cell-bound DNA persists for longer time periods than free DNA; 
+%\item Gram positive bacteria with tougher cell wall may be more effective and retaining DNA intracellularly resulting in greater protection from decomposition. For example, air killed gram negative bacteria demonstrate more pronounced morphological changes than gram positive bacteria which may result in creater cell wall permeability and progressive loss of DNA \cite{Brundin:2015aa}
+%\end{itemize}
+
+\section{Concluding Remarks}
+
+These results indicate that differences in the extent of cytosine deamination but not fragmentation can be observed between gram-positive and gram-negative bacteria. 
+While analysis of additional sample data is required to validate these results, these findings may have implications for paleomicrobial studies, particularly those involving amplicon sequencing approaches to identification and quantification of species. 
+Given that a 97\% identity cut-off is applied to differentiate between species in 16S rRNA amplicon sequencing, miscoding lesions brought about by cytosine deamination may limit the ability to align and accurately assign PCR amplicons to species in the database and may account for the observed reduction in abundance of Bacteroidetes in ancient samples. 
+
+Simulated data represents a valuable tool in assessing the accuracy of bioinformatic programs in quantifying aDNA damage in metagenomic samples. 
+The results presented here exemplify the complexity of extracting reads for particular species from metagenomic samples and highlight the impact of closely related species on the estimated damage. 
+Using tools such as gargamel it is possible for researchers to to simulate datasets similar to those found in practice and thus test multiple factors that may influence their results. 
+Such analyses can greatly enhance the reliablity of findings.
+
+
+\clearpage
+\singlespace
+\bibliographystyle{apacite}
+\bibliography{thesis_draft1}
+
+%\section{Appendices}
+\newpage
+\begin{appendices}
+%\titleformat{\section}{\normalfont\Large\bfseries}{\thesection.}{0.5em}{}
+%\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+
+\sectionfont{\large}
+\section{Genomes in the expanded alignment index}\label{appendix:expandedGenomesList}
+
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Tue Oct  3 06:14:37 2017
+\begin{table}[!ht]
+\centering\footnotesize
+\ra{1.3}
+\setlength{\tabcolsep}{6pt}
+%\caption{Summary of genomes in expanded alignment index}
+\begin{tabular}{C{5cm} C{3.75cm} C{2.75cm} C{2.75cm} }
+  \toprule
+ 	\textbf{Species} & \textbf{NCBI RefSeq ID} & \textbf{Phylum} & \textbf{Cell Type} \\ 
+  \midrule
+	\textit{Actinomyces oris} & NZ\_CP014232.1 & Actinobacteria & Gram-positive \\ 
+  	\textit{Aggregatibacter actinomycetemcomitans }& NZ\_CP012959.1 & Proteobacteria & Gram-negative \\ 
+  	\textit{Atopobium parvulum} & NC\_013203.1 & Actinobacteria & Gram-positive \\ 
+  	\textit{Campylobacter gracilis} & NZ\_CP012196.1 & Proteobacteria & Gram-negative \\ 
+  	\textit{Eubacterium saphenum} & NZ\_ACON00000000.1 & Firmicutes & Eubacterium \\ 
+  	\textit{Eubacterium sulci} & NZ\_CP012068.1 & Firmicutes & Eubacterium \\ 
+  	\textit{Fusobacterium nucleatum} & NC\_003454.1 & Fusobacteria & Gram-negative \\ 
+  	\textit{Haemophilus influenza} & NC\_000907.1 & Proteobacteria & Gram-negative \\ 
+  	\textit{Leptotrichia buccalis} & NC\_013192.1 & Fusobacteria & Gram-negative \\ 
+  	\textit{Methanobrevibacter oralis} & NZ\_LWMU00000000.1 & Euryarchaeota & Archaea \\ 
+  	\textit{Mycobacterium neoaurum} & NC\_023036.2 & Actinobacteria & Mycobacterium \\ 
+  	\textit{Neisseria meningitidis} & NC\_003112.2 & Proteobacteria & Gram-negative \\ 
+  	\textit{Neisseria sicca} & NZ\_CP020452.1 & Proteobacteria & Gram-negative \\ 
+  	\textit{Porphyromonas gingivalis} & NC\_010729.1 & Bacteroidetes & Gram-negative \\ 
+  	\textit{Prevotella denticola} & NC\_015311.1 & Bacteroidetes & Gram-negative \\ 
+  	\textit{Prevotella intermedia} & NC\_017860.1 & Bacteroidetes & Gram-negative \\
+  	 & NC\_017861.1 & & \\
+  	\textit{Propionibacterium propionicum} & NC\_018142.1 & Actinobacteria & Gram-positive \\ 
+  	\textit{Rothia dentocariosa} & NC\_014643.1 & Actinobacteria & Gram-positive \\ 
+  	\textit{Streptococcus mitis} & NC\_013853.1 & Firmicutes & Gram-positive \\ 
+  	\textit{Streptococcus mutans} & NC\_004350.1 & Firmicutes & Gram-positive \\ 
+  	\textit{Streptococcus sanguinis} & NC\_009009.1 & Firmicutes & Gram-positive \\ 
+  	\textit{Streptococcus gordonii} & NC\_009785.1 & Firmicutes & Gram-positive \\ 
+  	\textit{Tannerella forsythia} & NC\_016610.1 & Bacteroidetes & Gram-negative \\ 
+  	\textit{Treponema denticola} & NC\_002967.9 & Spirochaetes & Gram-negative \\ 
+  	\textit{Streptosporangium roseum} & NC\_013595.1 & Actinobacteria & Gram-positive \\ 
+  	 & NC\_013596.1 & & \\
+  	\textit{Clostridium sporogenes} & NZ\_CP011663.1 & Firmicutes & Gram-positive \\ 
+  	\textit{Kribbella flavida} & NC\_013729.1 & Actinobacteria & Gram-positive \\ 
+  	\textit{Pseudomonas florescens} & NC\_016830.1 & Proteobacteria & Gram-negative \\ 
+  	\textit{Bacillus subtilis} & NC\_000964.3 & Firmicutes & Gram-positive \\ 
+  	\textit{Staphylococcus epidermidis} & NC\_004461.1 & Firmicutes & Gram-positive \\ 
+  	 %& NC\_005008.1 & & \\
+  	 %& NC\_005007.1 & & \\
+  	 %& NC\_005006.1 & & \\
+  	 %& NC\_005005.1 & & \\
+  	 %& NC\_005004.1 & & \\
+  	 %& NC\_005003.1 & & \\
+   \bottomrule
+\end{tabular}
+\end{table}
+\clearpage
+
+%\section{List of simulated datasets}\label{appendix:simData.Files}
+%
+%% latex table generated in R 3.3.2 by xtable 1.8-2 package
+%% Thu Oct 26 23:55:33 2017
+%\begin{table}[!ht]
+%\centering\footnotesize
+%\ra{1.3}
+%\setlength{\tabcolsep}{6pt}
+%\begin{tabular}{L{8.5cm} C{1.5cm} C{2cm} C{2cm} }
+%  \toprule
+% FileName & Read length & $\delta_s $ & Contamination Level \\ 
+%  \midrule
+%	30bp\_0-1-damage-no-adapters\_d.fa.gz & 30bp & 0.1 & \\ 
+%	30bp\_0-5-damage-no-adapters\_d.fa.gz & 30bp & 0.5 & \\ 
+%	30bp\_Real-damage-profile-no-adapters.b.fa.gz & 30bp & No damage & \\ 
+%	30bp\_Real-damage-profile-no-adapters\_d.fa.gz & 30bp & Labrana & \\ 
+%	50bp\_0-1-damage-no-adapters\_d.fa.gz & 50bp & 0.1 & \\ 
+%	50bp\_0-5-damage-no-adapters\_d.fa.gz & 50bp & 0.5 & \\ 
+%	50bp\_endo-0.1\_lab-0.05\_env-0.85\_withDamage\_d.fa.gz & 50bp & varied & high \\ 
+%	50bp\_endo-0.35\_lab-0.05\_env-0.6\_withDamage\_d.fa.gz & 50bp & varied & moderate \\ 
+%	50bp\_endo-0.6\_lab-0.05\_env-0.35\_withDamage\_d.fa.gz & 50bp & varied & low-moderate \\ 
+%	50bp\_endo-0.85\_lab-0.05\_env-0.1\_withDamage\_d.fa.gz & 50bp & varied & low \\ 
+%	50bp\_Real-damage-profile-no-adapters.b.fa.gz & 50bp & No damage & \\ 
+%	50bp\_Real-damage-profile-no-adapters\_d.fa.gz & 50bp & Labrana & \\ 
+%	70bp\_0-1-damage-no-adapters\_d.fa.gz & 70bp & 0.1 & \\ 
+%	70bp\_0-5-damage-no-adapters\_d.fa.gz & 70bp & 0.5 & \\ 
+%	70bp\_Real-damage-profile-no-adapters.b.fa.gz & 70bp & No damage & \\ 
+%	70bp\_Real-damage-profile-no-adapters\_d.fa.gz & 70bp & Labrana & \\ 
+%	90bp\_0-1-damage-no-adapters\_d.fa.gz & 90bp & 0.1 & \\ 
+%	90bp\_0-5-damage-no-adapters\_d.fa.gz & 90bp & 0.5 & \\ 
+%	90bp\_endo-0.1\_lab-0.05\_env-0.85\_withDamage\_d.fa.gz & 90bp & varied & high \\ 
+%	90bp\_endo-0.35\_lab-0.05\_env-0.6\_withDamage\_d.fa.gz & 90bp & varied & moderate \\ 
+%	90bp\_endo-0.6\_lab-0.05\_env-0.35\_withDamage\_d.fa.gz & 90bp & varied & low-moderate \\ 
+%	90bp\_endo-0.85\_lab-0.05\_env-0.1\_withDamage\_d.fa.gz & 90bp & varied & low \\ 
+%	90bp\_Real-damage-profile-no-adapters.b.fa.gz & 90bp & No damage & \\ 
+%	90bp\_Real-damage-profile-no-adapters\_d.fa.gz & 90bp & Labrana & \\ 
+%	Empirical\_0-1-damage-ACAD-adapters\_d.fa.gz & Empirical & 0.1 & \\ 
+%	Empirical\_0-5-damage-ACAD-adapters\_d.fa.gz & Empirical & 0.5 & \\ 
+%	Empirical\_endo-0.1\_lab-0.05\_env-0.85\_noDamage\_d.fa.gz & Empirical & No damage & high \\ 
+%	Empirical\_endo-0.1\_lab-0.05\_env-0.85\_withDamage\_d.fa.gz & Empirical & varied & high \\ 
+%	Empirical\_endo-0.35\_lab-0.05\_env-0.6\_noDamage\_d.fa.gz & Empirical & No damage & moderate \\ 
+%	Empirical\_endo-0.35\_lab-0.05\_env-0.6\_withDamage\_d.fa.gz & Empirical & varied & moderate \\ 
+%	Empirical\_endo-0.6\_lab-0.05\_env-0.35\_noDamage\_d.fa.gz & Empirical & No damage & low-moderate \\ 
+%	Empirical\_endo-0.6\_lab-0.05\_env-0.35\_withDamage\_d.fa.gz & Empirical & varied & low-moderate \\  
+%	Empirical\_endo-0.85\_lab-0.05\_env-0.1\_noDamage\_d.fa.gz & Empirical & No damage & low \\ 
+%	Empirical\_endo-0.85\_lab-0.05\_env-0.1\_withDamage\_d.fa.gz & Empirical & varied & low \\ 
+%	Empirical\_Real-damage-profile-.b.fa.gz & Empirical & No damage & \\ 
+%	Empirical\_Real-damage-profile-\_d.fa.gz & Empirical & Labrana & \\ 
+%   \bottomrule
+%\end{tabular}
+%\end{table}
+
+
+\section[Estimated fragment lengths]{Comparison of mean and meadian fragment length before and after removal of reads $<$30bp in length}\label{appendix:filteredLengthStats}
+
+% latex table generated in R 3.3.2 by xtable 1.8-2 package
+% Sun Oct 29 03:38:53 2017
+\begin{table}[ht]
+\centering\footnotesize
+\ra{1.3}
+\setlength{\tabcolsep}{6pt}
+%\caption{Comparison of mean and meanian read length as well as the number of aligning reads before and after removal of reads $<$30bp in length}
+\begin{tabular}{@{}llrrcrrc@{}}
+  \toprule
+  & & \multicolumn{3}{c}{original data} & \multicolumn{3}{c}{length filtered data}\\
+  \cmidrule(lr){3-5} \cmidrule(lr){6-8} 
+	\thead{Sample} & \thead{Genome} & \thead{Reads} & \thead{Mean} & \thead{Median} & \thead{Reads} & \thead{Mean} & \thead{Median} \\ 
+  \midrule
+	Elsidron 1 & M.oralis & 87895 & 61.09 & 57 & 87653 & 61.16 & 57 \\ 
+	 & C.gracilis & 37017 & 51.88 & 49 & 36628 & 52.13 & 49 \\ 
+	 & F.nucleatum & 3608 & 52.40 & 50 & 3573 & 52.77 & 50 \\ 
+	 & H.influenza & 279 & 44.72 & 44 & 241 & 47.41 & 45 \\ 
+	 & N.meningitidis & 722 & 44.05 & 44 & 619 & 47.03 & 46 \\ 
+	 & P.gingivalis & 7113 & 50.19 & 48 & 7020 & 50.49 & 48 \\ 
+	 & P.intermedia & 9259 & 52.32 & 50 & 9170 & 52.57 & 50 \\ 
+	 & T.denticola & 11343 & 52.79 & 50 & 11236 & 53.04 & 51 \\ 
+	 & T.forsythia & 29091 & 49.28 & 47 & 28721 & 49.55 & 47 \\ 
+	 & A.oris & 125228 & 53.89 & 50 & 122806 & 54.41 & 51 \\ 
+	 & A.parvulum & 1367 & 51.75 & 49 & 1323 & 52.54 & 49 \\ 
+	 & E.saphenum & 8344 & 53.61 & 51 & 8275 & 53.78 & 51 \\ 
+	 & S.mitis & 3005 & 50.41 & 48 & 2967 & 50.78 & 48 \\ 
+	 & S.mutans & 288 & 45.39 & 45 & 254 & 48.30 & 46 \\ 
+	 & M.neoaurum & 1002 & 40.35 & 40 & 723 & 46.29 & 44 \\ 
+	Modern & M.oralis & 174 & 26.72 & 25 &  15 & 46.53 & 46 \\ 
+	 & C.gracilis & 20868 & 61.84 & 56 & 20209 & 62.98 & 57 \\ 
+	 & F.nucleatum & 272715 & 65.24 & 60 & 268514 & 65.83 & 60 \\ 
+	 & H.influenza & 1102 & 54.31 & 50 & 937 & 59.39 & 54 \\ 
+	 & N.meningitidis & 32278 & 59.15 & 54 & 31077 & 60.39 & 54 \\ 
+	 & P.gingivalis & 4326 & 64.14 & 58 & 4033 & 66.90 & 60 \\ 
+	 & P.intermedia & 44039 & 63.49 & 57 & 42858 & 64.49 & 58 \\ 
+	 & T.denticola & 6670 & 61.29 & 55 & 6313 & 63.28 & 57 \\ 
+	 & T.forsythia & 86641 & 66.02 & 60 & 84974 & 66.79 & 60 \\ 
+	 & A.oris & 17515 & 59.26 & 53 & 16771 & 60.69 & 54 \\ 
+	 & A.parvulum & 534 & 53.14 & 49 & 441 & 58.99 & 53 \\ 
+	 & E.saphenum & 155 & 34.72 & 29 &  76 & 44.59 & 43 \\ 
+	 & S.mitis & 43591 & 58.93 & 54 & 42439 & 59.79 & 54 \\ 
+	 & S.mutans & 421 & 39.98 & 34 & 247 & 50.43 & 46 \\ 
+	 & M.neoaurum & 967 & 36.38 & 32 & 556 & 44.31 & 43 \\ 
+   \bottomrule
+\end{tabular}
+\end{table}
+\clearpage
+
+\section[Misincorporation frequency plotted by GC content]{Misincorporation frequency plotted by GC content}\label{appendix:misincorpFreq_GCcontent}
+
+\begin{figure}[ht]
+	\setlength\abovecaptionskip{8pt}
+	\begin{center}
+	\includegraphics[scale=0.5]{Rplots/misincorporationFreq_by_GCcontent.pdf}
+	\end{center}
+	\caption{}\label{fig:misincorpFreq_GCcontent}
+\end{figure}
+\clearpage
+
+\end{appendices}
+
+\end{document}
